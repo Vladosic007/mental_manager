@@ -1,0 +1,18 @@
+# --- Ядро бота / YandexGPT ---
+requests
+python-dotenv
+
+# --- Telegram-бот (main.py) ---
+python-telegram-bot
+matplotlib
+
+# --- Веб-приложение (webapp/server.py) ---
+fastapi
+uvicorn[standard]
+
+# --- ML: детектор кризиса и семантический поиск по базе знаний ---
+torch
+transformers
+sentence-transformers
+numpy
+scikit-learn

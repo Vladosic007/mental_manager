@@ -1,0 +1,36 @@
+# === Секреты и окружение (НИКОГДА не коммитить) ===
+.env
+.env.*
+!.env.example
+
+# === Виртуальное окружение Python ===
+.venv/
+venv/
+env/
+ENV/
+
+# === Python ===
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+
+# === Пользовательские данные (личная переписка — не для репозитория) ===
+user_profiles.json
+user_states.json
+mood_tracking.json
+
+# === Логи ===
+training_log_*.txt
+*.log
+
+# === Claude Code / IDE ===
+.claude/settings.local.json
+.idea/
+.vscode/
+
+# === ОС ===
+.DS_Store
+Thumbs.db
+desktop.ini
