@@ -8,6 +8,7 @@ mental_core.process_message(), то есть на сайте отвечает р
 (тот же промпт «Ментал», кризис-детектор, база знаний, память, ключи из .env).
 """
 
+import os
 import sys
 from pathlib import Path
 
@@ -217,6 +218,8 @@ if __name__ == "__main__":
     print("  Mental Manager - web server")
     print(f"  YandexGPT: {bool(mental_core.YANDEX_API_KEY and mental_core.YANDEX_FOLDER_ID)}")
     print(f"  ML (semantic): {mental_core.embedder is not None}")
-    print("  Open in browser:  http://localhost:8000")
+    port = int(os.getenv("PORT", "8000"))
+    print(f"  Open in browser:  http://localhost:{port}")
     print("=" * 55)
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+    # 0.0.0.0 — чтобы сервер был доступен снаружи (деплой/туннель); PORT задаёт хостинг (HF Spaces = 7860)
+    uvicorn.run(app, host="0.0.0.0", port=port)

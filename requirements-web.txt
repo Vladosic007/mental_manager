@@ -1,0 +1,12 @@
+# Зависимости веб-приложения «Ментал» для деплоя (без Telegram-бота и matplotlib).
+# torch ставится отдельно в Dockerfile (CPU-сборка). Версии зафиксированы под рабочее окружение.
+requests==2.34.2
+python-dotenv==1.2.3
+fastapi==0.141.1
+uvicorn[standard]==0.54.0
+pydantic==2.13.5
+numpy==2.4.6
+scikit-learn==1.9.1
+huggingface-hub==1.33.0
+transformers==5.17.0
+sentence-transformers==6.1.0

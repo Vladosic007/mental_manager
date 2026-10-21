@@ -1,0 +1,26 @@
+# Не копируем в образ: секреты, данные пользователей, мусор, Telegram-часть
+.git
+.gitignore
+.github
+__pycache__/
+*.pyc
+*.pyo
+.env
+.env.*
+!.env.example
+user_profiles.json
+user_states.json
+mood_tracking.json
+platform_accounts.json
+platform_tests.json
+platform_submissions.json
+.venv/
+venv/
+env/
+legacy/
+.claude/
+.vscode/
+.idea/
+*.log
+training_log_*.txt
+requirements.txt
