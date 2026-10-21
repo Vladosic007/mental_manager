@@ -12,8 +12,9 @@ RUN useradd -m -u 1000 user
 
 WORKDIR /app
 
-# torch — отдельно, CPU-сборка (без CUDA: легче и достаточно для инференса)
-RUN pip install --no-cache-dir torch==2.12.0 --index-url https://download.pytorch.org/whl/cpu
+# torch — отдельно, CPU-сборка (без CUDA: легче и достаточно для инференса).
+# Версию не фиксируем: берём актуальное CPU-колесо, совместимое с sentence-transformers.
+RUN pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu
 
 # Остальные зависимости веб-приложения
 COPY requirements-web.txt .
