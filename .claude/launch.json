@@ -2,10 +2,10 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "bubbleapp-dev",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
-      "port": 3000
+      "name": "mental-web",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["webapp/server.py"],
+      "port": 8000
     }
   ]
 }

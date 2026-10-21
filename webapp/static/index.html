@@ -49,7 +49,13 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
 html, body { height: 100%; }
+:focus-visible { outline: 2px solid var(--sky); outline-offset: 2px; border-radius: 4px; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+}
 body {
   font-family: 'Inter', system-ui, sans-serif;
   background: var(--bg);
@@ -126,7 +132,7 @@ body {
   font-size: clamp(2.2rem, 6vw, 4rem);
   font-weight: 700; line-height: 1.15;
   color: var(--text); position: relative;
-  max-width: 820px;
+  max-width: 820px; text-wrap: balance;
 }
 .hero h1 em { font-style: normal; color: var(--sky); }
 .hero-sub {
@@ -717,6 +723,95 @@ body {
   color: var(--text-soft); font-size: .88rem; line-height: 1.9;
 }
 
+/* ── VALIDATED TESTS / RESULTS / TECHNIQUES ── */
+.test-source { font-size: .72rem; color: var(--text-muted); margin-top: 6px; letter-spacing: .02em; }
+.opt-list { display: flex; flex-direction: column; gap: 10px; margin-top: 18px; }
+.opt-btn {
+  text-align: left; background: var(--bg); border: 1.5px solid var(--border);
+  border-radius: 12px; padding: 14px 16px; cursor: pointer; font-family: inherit;
+  font-size: .95rem; color: var(--text); transition: border-color .15s, background .15s, transform .1s;
+}
+.opt-btn:hover { border-color: var(--sky); background: rgba(61,127,212,.06); }
+.opt-btn:active { transform: scale(.99); }
+.test-score-num { font-family: 'Unbounded', sans-serif; font-size: 2.4rem; font-weight: 700; margin: 4px 0 2px; }
+.test-score-num span { font-size: 1.1rem; color: var(--text-muted); font-weight: 400; }
+.test-steps { text-align: left; margin: 18px auto 0; max-width: 460px; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; }
+.test-steps li { color: var(--text-soft); font-size: .92rem; line-height: 1.55; }
+.test-disclaimer { font-size: .78rem; color: var(--text-muted); line-height: 1.5; margin: 20px auto 24px; max-width: 460px; }
+
+.results-head { margin-bottom: 24px; }
+.results-head h2 { font-family: 'Unbounded', sans-serif; font-size: 1.35rem; font-weight: 700; color: var(--text); }
+.results-head p { color: var(--text-soft); margin-top: 8px; }
+.results-empty { text-align: center; color: var(--text-soft); padding: 60px 20px; line-height: 1.6; }
+.result-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 20px; margin-bottom: 16px; }
+.result-card-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
+.result-card-name { font-weight: 600; font-size: .98rem; color: var(--text); }
+.result-card-sub { font-size: .78rem; color: var(--text-muted); margin-top: 2px; }
+.result-badge { font-size: .8rem; font-weight: 600; padding: 6px 12px; border-radius: 20px; white-space: nowrap; }
+.result-canvas { width: 100%; display: block; }
+
+.tech-cat { font-size: .75rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--sage); margin: 22px 0 10px; }
+.tech-card { display: flex; gap: 14px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 16px 18px; margin-bottom: 10px; }
+.tech-icon { font-size: 24px; flex-shrink: 0; line-height: 1.2; }
+.tech-name { font-weight: 600; font-size: .98rem; color: var(--text); }
+.tech-when { font-size: .8rem; color: var(--sky); margin: 3px 0 6px; }
+.tech-how { font-size: .9rem; color: var(--text-soft); line-height: 1.6; }
+
+.test-analysis { text-align: left; max-width: 480px; margin: 16px auto 0; color: var(--text); font-size: .95rem; line-height: 1.65; background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; }
+.test-steps-head { text-align: left; max-width: 480px; margin: 18px auto 2px; font-weight: 600; font-size: .9rem; color: var(--text); }
+
+.catalog-card { display: flex; align-items: center; justify-content: space-between; gap: 12px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 15px 18px; margin-bottom: 10px; cursor: pointer; transition: border-color .15s, transform .1s, box-shadow .2s; }
+.catalog-card:hover { border-color: var(--sky); box-shadow: 0 6px 20px rgba(27,43,75,.08); }
+.catalog-card:active { transform: scale(.995); }
+.catalog-name { font-weight: 600; font-size: .98rem; color: var(--text); }
+.catalog-meta { font-size: .76rem; color: var(--text-muted); margin-top: 3px; }
+.catalog-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.cat-badge { font-size: .72rem; font-weight: 600; padding: 4px 10px; border-radius: 20px; white-space: nowrap; }
+.cat-badge-new { background: var(--border); color: var(--text-muted); }
+.catalog-arrow { color: var(--text-muted); font-size: 16px; }
+
+.profile-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 16px; max-width: 520px; }
+.profile-field { display: flex; flex-direction: column; gap: 6px; }
+.profile-field span { font-size: .82rem; color: var(--text-soft); font-weight: 500; }
+.profile-input { background: var(--bg); border: 1.5px solid var(--border); border-radius: 10px; padding: 11px 12px; font-family: inherit; font-size: .92rem; color: var(--text); outline: none; transition: border-color .15s; }
+.profile-input:focus { border-color: var(--sky); }
+/* ── Платформа (вход / кабинет / конструктор тестов) ── */
+.plt-tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+.plt-tab { flex: 1; padding: 10px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg); color: var(--text); cursor: pointer; font-family: inherit; font-size: .92rem; }
+.plt-tab.active { background: var(--sky); color: #fff; border-color: var(--sky); }
+.plt-msg { margin-top: 12px; font-size: .9rem; min-height: 1.2em; }
+.plt-row { display: flex; gap: 8px; align-items: flex-start; margin-bottom: 8px; }
+.plt-row .profile-input { flex: 1; }
+.plt-mini { background: transparent; border: 1px solid var(--border); color: var(--text); border-radius: 8px; padding: 8px 11px; cursor: pointer; font-family: inherit; font-size: .85rem; white-space: nowrap; }
+.plt-mini:hover { border-color: var(--sky); }
+.plt-note { font-size: .85rem; opacity: .75; margin-top: 12px; }
+.plt-section-title { font-weight: 600; margin: 18px 0 8px; }
+.plt-progress { opacity: .7; font-size: .9rem; margin-bottom: 12px; }
+.plt-opt { display: block; width: 100%; text-align: left; background: var(--bg); border: 1.5px solid var(--border); border-radius: 12px; padding: 13px 16px; margin-bottom: 10px; color: var(--text); cursor: pointer; font-family: inherit; font-size: .95rem; transition: border-color .15s; }
+.plt-opt:hover { border-color: var(--sky); }
+.plt-score { font-size: 1.05rem; font-weight: 600; margin-bottom: 6px; }
+.plt-badge-teacher { display: inline-block; font-size: .72rem; padding: 2px 8px; border-radius: 20px; background: rgba(61,127,212,.18); color: var(--sky); margin-left: 6px; }
+.plt-consent { background: rgba(224,90,90,.12); border: 1px solid rgba(224,90,90,.4); border-radius: 12px; padding: 12px 14px; margin-bottom: 14px; font-size: .9rem; line-height: 1.5; }
+.profile-badge { margin: 0 14px 6px; padding: 8px 12px; background: rgba(61,127,212,.14); border: 1px solid rgba(61,127,212,.28); border-radius: 10px; color: #a9cdf5; font-size: .78rem; line-height: 1.35; }
+
+.journal-ta { resize: vertical; min-height: 46px; line-height: 1.5; }
+.journal-entry { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; }
+.journal-entry-date { font-size: .72rem; color: var(--text-muted); margin-bottom: 8px; }
+.journal-entry-row { font-size: .88rem; color: var(--text-soft); line-height: 1.5; margin-bottom: 4px; }
+.journal-entry-row b { color: var(--text); font-weight: 600; }
+.journal-del { margin-top: 8px; background: none; border: 1px solid var(--border); color: var(--text-muted); border-radius: 8px; padding: 5px 12px; font-size: .78rem; cursor: pointer; font-family: inherit; transition: border-color .15s, color .15s; }
+.journal-del:hover { border-color: #E05A5A; color: #E05A5A; }
+
+.help-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 22px; margin-bottom: 16px; }
+.help-card h3 { font-weight: 600; font-size: 1.02rem; color: var(--text); margin-bottom: 10px; }
+.help-card p { color: var(--text-soft); font-size: .92rem; line-height: 1.65; margin-bottom: 8px; }
+.help-card ul { margin: 4px 0 0; padding-left: 18px; color: var(--text-soft); font-size: .92rem; line-height: 1.8; }
+.help-card ul b { color: var(--text); }
+.help-note { font-size: .85rem; color: var(--text-muted); }
+.help-urgent { border-color: rgba(224,90,90,.4); background: rgba(224,90,90,.06); }
+.help-phone { font-family: 'Unbounded', sans-serif; font-size: 1.45rem; font-weight: 700; color: #E05A5A; margin-top: 10px; }
+.help-phone-sub { font-size: .8rem; color: var(--text-muted); margin-top: 2px; }
+
 /* SCROLLBAR */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
@@ -830,8 +925,8 @@ body {
       </div>
       <div class="feature-card">
         <div class="feature-icon green">📊</div>
-        <h3>Психологические тесты</h3>
-        <p>Тест на стресс и выгорание с персональным разбором результатов и советами.</p>
+        <h3>Валидированные тесты</h3>
+        <p>Научные шкалы (PSS-10, GAD-7, WHO-5, CBI) с разбором результата и динамикой во времени.</p>
       </div>
       <div class="feature-card">
         <div class="feature-icon purple">📈</div>
@@ -864,7 +959,7 @@ body {
       <div class="step-card">
         <div class="step-num">04</div>
         <h4>Пройди тесты</h4>
-        <p>Узнай свой уровень стресса и выгорания через короткие тесты.</p>
+        <p>Стресс, тревога, самочувствие, выгорание — по научным шкалам, с динамикой.</p>
       </div>
     </div>
   </section>
@@ -915,6 +1010,7 @@ body {
     <button class="sidebar-new-chat" onclick="newChat()">
       ✏️ Новый чат
     </button>
+    <div id="profile-badge" class="profile-badge" hidden></div>
     <div class="sidebar-section-label">История</div>
     <div class="sidebar-history" id="chat-history-list">
       <!-- filled by JS -->
@@ -924,18 +1020,33 @@ body {
       <div class="nav-item active" data-view="chat" onclick="switchView('chat')">
         <span class="nav-item-icon">💬</span> Чат
       </div>
-      <div class="nav-item" data-view="stress" onclick="switchView('stress')">
-        <span class="nav-item-icon">📊</span> Тест: Стресс
+      <div class="nav-item" data-view="tests" onclick="switchView('tests')">
+        <span class="nav-item-icon">📋</span> Тесты
       </div>
-      <div class="nav-item" data-view="burnout" onclick="switchView('burnout')">
-        <span class="nav-item-icon">🔥</span> Тест: Выгорание
+      <div class="sidebar-section-label">Инструменты</div>
+      <div class="nav-item" data-view="results" onclick="switchView('results')">
+        <span class="nav-item-icon">📈</span> Мои результаты
       </div>
       <div class="nav-item" data-view="mood" onclick="switchView('mood')">
         <span class="nav-item-icon">😊</span> Настроение
       </div>
+      <div class="nav-item" data-view="techniques" onclick="switchView('techniques')">
+        <span class="nav-item-icon">🧰</span> Техники
+      </div>
+      <div class="nav-item" data-view="journal" onclick="switchView('journal')">
+        <span class="nav-item-icon">📓</span> Дневник мыслей
+      </div>
+      <div class="sidebar-section-label">ЮФУ</div>
+      <div class="nav-item" data-view="profile" onclick="switchView('profile')">
+        <span class="nav-item-icon">🎓</span> Мой профиль
+      </div>
+      <div class="nav-item" data-view="help" onclick="switchView('help')">
+        <span class="nav-item-icon">🆘</span> Куда обратиться
+      </div>
       <div class="nav-item" data-view="about" onclick="switchView('about')">
         <span class="nav-item-icon">ℹ️</span> О проекте
       </div>
+      <div id="platform-nav"><!-- вход/кабинет для преподавателей и психологов, заполняется JS --></div>
     </nav>
   </aside>
 
@@ -979,18 +1090,54 @@ body {
         </div>
       </div>
 
-      <!-- STRESS TEST VIEW -->
-      <div class="view" id="view-stress">
-        <div class="test-view-inner" id="test-stress-inner">
-          <!-- filled by JS -->
-        </div>
+      <!-- TESTS CATALOG VIEW -->
+      <div class="view" id="view-tests">
+        <div class="test-view-inner" id="tests-inner"><!-- filled by JS --></div>
       </div>
 
-      <!-- BURNOUT TEST VIEW -->
-      <div class="view" id="view-burnout">
-        <div class="test-view-inner" id="test-burnout-inner">
-          <!-- filled by JS -->
-        </div>
+      <!-- TEST VIEW (generic, for all validated scales) -->
+      <div class="view" id="view-test">
+        <div class="test-view-inner" id="test-inner"><!-- filled by JS --></div>
+      </div>
+
+      <!-- PLATFORM: LOGIN (преподаватели/психологи) -->
+      <div class="view" id="view-login">
+        <div class="test-view-inner" id="login-inner"><!-- filled by JS --></div>
+      </div>
+
+      <!-- PLATFORM: CABINET (кабинет сотрудника) -->
+      <div class="view" id="view-cabinet">
+        <div class="test-view-inner" id="cabinet-inner"><!-- filled by JS --></div>
+      </div>
+
+      <!-- PLATFORM: CUSTOM TEST RUNNER (тест от сотрудника) -->
+      <div class="view" id="view-ctest">
+        <div class="test-view-inner" id="ctest-inner"><!-- filled by JS --></div>
+      </div>
+
+      <!-- PROFILE VIEW (ЮФУ: институт / курс) -->
+      <div class="view" id="view-profile">
+        <div class="test-view-inner" id="profile-inner"><!-- filled by JS --></div>
+      </div>
+
+      <!-- JOURNAL VIEW (КПТ: дневник мыслей) -->
+      <div class="view" id="view-journal">
+        <div class="test-view-inner" id="journal-inner"><!-- filled by JS --></div>
+      </div>
+
+      <!-- HELP VIEW (куда обратиться) -->
+      <div class="view" id="view-help">
+        <div class="test-view-inner" id="help-inner"><!-- filled by JS --></div>
+      </div>
+
+      <!-- RESULTS / DYNAMICS VIEW -->
+      <div class="view" id="view-results">
+        <div class="test-view-inner" id="results-inner"><!-- filled by JS --></div>
+      </div>
+
+      <!-- TECHNIQUES LIBRARY VIEW -->
+      <div class="view" id="view-techniques">
+        <div class="test-view-inner" id="techniques-inner"><!-- filled by JS --></div>
       </div>
 
       <!-- MOOD VIEW -->
@@ -1045,7 +1192,7 @@ body {
             <ul>
               <li>Выслушивает и поддерживает</li>
               <li>Предлагает психологические техники (дыхание, рефрейминг, планирование)</li>
-              <li>Проводит тесты на стресс и выгорание</li>
+              <li>Проводит валидированные тесты (PSS-10, GAD-7, WHO-5, CBI)</li>
               <li>Отслеживает твоё настроение</li>
               <li>Знает про сессию, дедлайны, научрука и ЮФУ в целом</li>
             </ul>
@@ -1078,6 +1225,7 @@ function goToChat() {
   document.getElementById('page-chat').classList.add('active');
   document.body.style.overflow = 'hidden';
   renderHistory();
+  updateProfileBadge();
   switchView('chat');
 }
 function goToLanding() {
@@ -1105,23 +1253,44 @@ function closeSidebar() {
 // ═══════════════════════════════════════════
 const viewTitles = {
   chat: ['Ментал', 'Психологический помощник ЮФУ'],
-  stress: ['Тест на стресс', '6 вопросов · ~2 минуты'],
-  burnout: ['Тест на выгорание', '7 вопросов · ~3 минуты'],
+  tests: ['Тесты', 'Научные психологические методики'],
+  results: ['Мои результаты', 'Динамика по тестам'],
   mood: ['Настроение', 'Ежедневный чек-ин'],
-  about: ['О проекте', 'Ментал для студентов ЮФУ']
+  techniques: ['Техники', 'Библиотека самопомощи'],
+  journal: ['Дневник мыслей', 'Разбор по методу КПТ'],
+  profile: ['Мой профиль', 'Студент ЮФУ'],
+  help: ['Куда обратиться', 'Помощь и поддержка'],
+  about: ['О проекте', 'Ментал для студентов ЮФУ'],
+  login: ['Вход', 'Для преподавателей и психологов'],
+  cabinet: ['Кабинет', 'Создание тестов для студентов'],
+  ctest: ['Тест', 'Тест от сотрудника ЮФУ']
 };
-function switchView(view) {
+function showView(viewId) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  const el = document.getElementById('view-' + viewId);
+  if (el) el.classList.add('active');
+}
+function setActiveNav(selector) {
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  document.getElementById('view-' + view).classList.add('active');
-  document.querySelector('[data-view="' + view + '"]').classList.add('active');
+  const el = document.querySelector(selector);
+  if (el) el.classList.add('active');
+}
+function switchView(view) {
+  showView(view);
+  setActiveNav('[data-view="' + view + '"]');
   const [title, sub] = viewTitles[view] || ['Ментал', ''];
   document.getElementById('topbar-title').textContent = title;
   document.getElementById('topbar-sub').textContent = sub;
   closeSidebar();
-  if (view === 'stress') renderTest('stress');
-  if (view === 'burnout') renderTest('burnout');
+  if (view === 'tests') renderCatalog();
   if (view === 'mood') renderMoodChart();
+  if (view === 'results') renderResults();
+  if (view === 'techniques') renderTechniques();
+  if (view === 'profile') renderProfile();
+  if (view === 'journal') renderJournal();
+  if (view === 'help') renderHelp();
+  if (view === 'login') renderLogin();
+  if (view === 'cabinet') renderCabinet();
 }
 
 // ═══════════════════════════════════════════
@@ -1301,10 +1470,12 @@ function getSessionId() {
 }
 
 async function askBackend(text) {
+  let p = {};
+  try { p = getProfile(); } catch(e) {}
   const res = await fetch('/api/chat', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ message: text, session_id: getSessionId() })
+    body: JSON.stringify({ message: text, session_id: getSessionId(), name: p.name || '', faculty: p.unit || '', course: p.course || '' })
   });
   if (!res.ok) throw new Error('http ' + res.status);
   const data = await res.json();
@@ -1315,121 +1486,916 @@ async function askBackend(text) {
 // TESTS
 // ═══════════════════════════════════════════
 const TESTS = {
-  stress: {
-    name: 'Уровень стресса',
-    intro: 'Этот тест поможет оценить твой текущий уровень стресса. Отвечай честно — никто не видит твои ответы.',
-    questions: [
-      'Как часто ты чувствуешь, что не справляешься с нагрузкой?',
-      'Насколько тебе сложно расслабиться после учёбы?',
-      'Как часто ты испытываешь головные боли или напряжение в теле?',
-      'Насколько трудно тебе концентрироваться на учёбе?',
-      'Как часто ты чувствуешь себя раздражённым или вспыльчивым?',
-      'Насколько часто у тебя нарушается сон из-за переживаний?'
+  pss10: {
+    name:'Стресс', full:'Шкала воспринимаемого стресса', category:'Стресс и тревога',
+    source:'PSS-10 · Cohen, Kamarck & Mermelstein, 1983',
+    intro:'Научная шкала стресса, которую используют в исследованиях по всему миру. 10 вопросов о последнем месяце. Ответы видишь только ты.',
+    instruction:'За последний месяц, как часто вы…',
+    options:[{v:0,label:'Никогда'},{v:1,label:'Почти никогда'},{v:2,label:'Иногда'},{v:3,label:'Часто'},{v:4,label:'Очень часто'}],
+    questions:[
+      {t:'…расстраивались из-за того, что произошло неожиданно?'},
+      {t:'…чувствовали, что не можете контролировать важные вещи в своей жизни?'},
+      {t:'…чувствовали нервозность и напряжение?'},
+      {t:'…были уверены в своей способности справляться с личными проблемами?',rev:true},
+      {t:'…чувствовали, что всё идёт так, как вам нужно?',rev:true},
+      {t:'…понимали, что не справляетесь со всеми делами, которые нужно сделать?'},
+      {t:'…были способны контролировать раздражение в своей жизни?',rev:true},
+      {t:'…чувствовали, что держите всё под контролем?',rev:true},
+      {t:'…злились из-за того, что было вне вашего контроля?'},
+      {t:'…чувствовали, что трудности копятся так, что их не преодолеть?'}
     ],
-    getResult(sum) {
-      if (sum <= 12) return { emoji:'🟢', title:'Низкий стресс', desc:'Ты справляешься хорошо! Стресс в норме. Продолжай поддерживать баланс — регулярный сон, активность и общение с друзьями делают своё дело.', color:'#2EAA82', pct: Math.round(sum/30*100) };
-      if (sum <= 21) return { emoji:'🟡', title:'Умеренный стресс', desc:'Стресс есть, но пока управляемый. Обрати внимание на сон и отдых. Попробуй добавить хотя бы 15 минут физической активности в день — это реально снижает кортизол.', color:'#F5A623', pct: Math.round(sum/30*100) };
-      return { emoji:'🔴', title:'Высокий стресс', desc:'Твой уровень стресса повышен. Это серьёзный сигнал — не игнорируй его. Рекомендую обратиться в Психологическую службу ЮФУ (бесплатно) или поговорить с Менталом подробнее о том, что происходит.', color:'#E05A5A', pct: Math.round(sum/30*100) };
+    score(ans){
+      let total=0; ans.forEach((a,i)=>total+=this.questions[i].rev?(4-a):a);
+      if(total<=13) return {value:total,max:40,level:'low',color:'#2EAA82',title:'Низкий стресс',
+        analysis:'Ты воспринимаешь свою жизнь как достаточно управляемую и справляешься с нагрузкой. Уровень стресса в пределах нормы — это хороший ресурсный фон.',
+        steps:['Продолжай то, что работает: режим сна, паузы, общение.','Если временами накрывает — техники дыхания в разделе «Техники».']};
+      if(total<=26) return {value:total,max:40,level:'mid',color:'#F5A623',title:'Умеренный стресс',
+        analysis:'Стресс ощутим, но пока в управляемой зоне. Для студента в активный период (сессия, дедлайны) это типично. Важно не дать ему стать хроническим.',
+        steps:['Загляни в «Техники»: дыхание 4-7-8 и метод «помидора».','Добавь 15 минут активности в день — это реально снижает стресс.','Выделяй время на восстановление, а не только на дела.']};
+      return {value:total,max:40,level:'high',color:'#E05A5A',title:'Высокий стресс',
+        analysis:'Ты воспринимаешь нагрузку как превышающую твои ресурсы. Высокий стресс бьёт по сну, концентрации и настроению. Это сигнал позаботиться о себе, а не «перетерпеть».',
+        steps:['Определи одну самую важную задачу на сегодня — не пять, одну.','Разбери навязчивые тревожные мысли в «Дневнике мыслей» (модель ABC).','Обратись в Психологическую службу ЮФУ (бесплатно, без осуждения).','Обсуди, что давит, с Менталом в чате.']};
     }
   },
-  burnout: {
-    name: 'Учебное выгорание',
-    intro: 'Выгорание — это не слабость, а накопленное истощение. Тест поможет понять, где ты находишься.',
-    questions: [
-      'Как часто ты чувствуешь себя эмоционально опустошённым после учёбы?',
-      'Насколько часто учёба кажется тебе бессмысленной?',
-      'Как часто ты избегаешь выполнения учебных заданий?',
-      'Насколько снизилась твоя эффективность по сравнению с началом обучения?',
-      'Как часто ты думаешь, что не справляешься как студент?',
-      'Насколько часто ты чувствуешь, что тебе всё надоело?',
-      'Как часто ты испытываешь цинизм или равнодушие к учёбе?'
+  gad7: {
+    name:'Тревога', full:'Шкала тревоги', category:'Стресс и тревога',
+    source:'GAD-7 · Spitzer et al., 2006',
+    intro:'Стандартный скрининг тревожности, применяется в медицине и исследованиях. 7 вопросов о последних двух неделях.',
+    instruction:'За последние 2 недели как часто вас беспокоило:',
+    options:[{v:0,label:'Совсем нет'},{v:1,label:'Несколько дней'},{v:2,label:'Больше половины дней'},{v:3,label:'Почти каждый день'}],
+    questions:[
+      {t:'Нервозность, тревога или ощущение «на взводе»'},
+      {t:'Неспособность остановить или контролировать беспокойство'},
+      {t:'Слишком сильное беспокойство по разным поводам'},
+      {t:'Трудно расслабиться'},
+      {t:'Такое беспокойство, что трудно усидеть на месте'},
+      {t:'Лёгкая раздражительность или вспыльчивость'},
+      {t:'Страх, будто может случиться что-то ужасное'}
     ],
-    getResult(sum) {
-      if (sum <= 14) return { emoji:'🟢', title:'Выгорания нет', desc:'Отлично! Ты сохраняешь мотивацию и интерес к учёбе. Продолжай в том же духе — следи за балансом между работой и отдыхом.', color:'#2EAA82', pct: Math.round(sum/35*100) };
-      if (sum <= 24) return { emoji:'🟡', title:'Начальные признаки', desc:'Есть признаки усталости и снижения мотивации. Важно не игнорировать это сейчас. Попробуй добавить больше приятных активностей, переговори с научруком о нагрузке, если возможно.', color:'#F5A623', pct: Math.round(sum/35*100) };
-      return { emoji:'🔴', title:'Выгорание', desc:'Ты переживаешь выгорание. Это серьёзно, и ты не виноват — это накопленное. Пожалуйста, поговори с кем-то: другом, психологом ЮФУ или напиши мне подробнее о том, что происходит.', color:'#E05A5A', pct: Math.round(sum/35*100) };
+    score(ans){
+      const total=ans.reduce((a,b)=>a+b,0);
+      if(total<=4) return {value:total,max:21,level:'low',color:'#2EAA82',title:'Минимальная тревога',
+        analysis:'Признаков повышенной тревожности сейчас нет. Эпизодическое волнение — нормальная часть жизни, особенно в учёбе.',
+        steps:['Если иногда накрывает — в «Техниках» есть дыхание и заземление 5-4-3-2-1.']};
+      if(total<=9) return {value:total,max:21,level:'mid',color:'#F5A623',title:'Лёгкая тревога',
+        analysis:'Тревожность слегка повышена. Это ещё не повод для беспокойства, но стоит за собой последить, чтобы она не нарастала.',
+        steps:['Регулярный сон, активность и дыхательные техники реально помогают.','Замечай, что именно запускает тревогу — это половина решения.']};
+      return {value:total,max:21,level:'high',color:'#E05A5A',title:'Заметная тревога',
+        analysis:'Показатель выше клинического порога (10+). Тревога, скорее всего, мешает учёбе, сну и повседневным делам. С этим можно и нужно работать — и становится легче.',
+        steps:['При выраженной тревоге стоит обратиться к психотерапевту или психиатру — это разумный шаг, а не «слабость».','Психологическая служба ЮФУ — бесплатно для студентов.','Разбирай тревожные мысли в «Дневнике мыслей» (по шагам, модель ABC).','Расскажи Менталу, что тревожит — разберём вместе.']};
+    }
+  },
+  westside: {
+    name:'Тревога перед экзаменами', full:'Шкала экзаменационной тревоги', category:'Стресс и тревога',
+    source:'Westside Test Anxiety Scale · Driscoll, 2007',
+    intro:'Специальная шкала тревоги, связанной с экзаменами и проверками — то, с чем сталкивается почти каждый студент ЮФУ. 10 утверждений.',
+    instruction:'Насколько это про тебя:',
+    options:[{v:1,label:'Совсем не про меня'},{v:2,label:'Редко'},{v:3,label:'Иногда'},{v:4,label:'Часто'},{v:5,label:'Всегда про меня'}],
+    questions:[
+      {t:'Чем ближе важный экзамен, тем труднее мне сосредоточиться на материале.'},
+      {t:'Когда я готовлюсь, я боюсь, что не вспомню материал на экзамене.'},
+      {t:'Во время важных экзаменов я думаю, что всё плохо или что я провалюсь.'},
+      {t:'На важных экзаменах я теряю концентрацию и забываю то, что знал(а).'},
+      {t:'Ответ на вопрос вспоминается уже после того, как экзамен закончился.'},
+      {t:'Я так волнуюсь перед экзаменом, что потом слишком вымотан(а), чтобы показать лучшее.'},
+      {t:'На важных экзаменах я чувствую себя «не в своей тарелке».'},
+      {t:'Во время важных экзаменов мои мысли иногда «уплывают».'},
+      {t:'После экзамена я переживаю, достаточно ли хорошо справился(ась).'},
+      {t:'Мне тяжело с письменными работами, и я откладываю их — кажется, что сделаю недостаточно хорошо.'}
+    ],
+    score(ans){
+      const avg=Math.round(ans.reduce((a,b)=>a+b,0)/ans.length*10)/10;
+      if(avg<=2.5) return {value:avg,max:5,level:'low',color:'#2EAA82',title:'Низкая экзаменационная тревога',
+        analysis:'Экзамены волнуют тебя в пределах нормы — волнение скорее мобилизует, чем мешает. Это хороший признак.',
+        steps:['Держи рабочий ритм подготовки, высыпайся перед экзаменом.']};
+      if(avg<3.5) return {value:avg,max:5,level:'mid',color:'#F5A623',title:'Повышенная тревога перед экзаменами',
+        analysis:'Тревога перед проверками ощутимо мешает — отвлекает, «съедает» часть памяти и сил. Но она хорошо поддаётся тренировке.',
+        steps:['За 5 минут до экзамена — дыхание 4-7-8, чтобы снизить возбуждение.','Готовься «мини-экзаменами»: проверяй себя, а не только перечитывай.','Выспись — недосып усиливает экзаменационную тревогу.']};
+      return {value:avg,max:5,level:'high',color:'#E05A5A',title:'Высокая экзаменационная тревога',
+        analysis:'Тревога перед экзаменами выражена сильно и, вероятно, мешает показать то, что ты реально знаешь. Это частая и решаемая проблема — не приговор твоим способностям.',
+        steps:['Техника заземления 5-4-3-2-1 прямо перед аудиторией.','Разбери мысли-катастрофы об экзамене в «Дневнике мыслей» (модель ABC).','Разбей подготовку на маленькие шаги — так меньше паники.','Психологическая служба ЮФУ помогает с экзаменационной тревогой бесплатно.']};
+    }
+  },
+  who5: {
+    name:'Самочувствие', full:'Индекс благополучия ВОЗ', category:'Настроение и самочувствие', higherBetter:true,
+    source:'WHO-5 · ВОЗ, 1998',
+    intro:'Короткий индекс благополучия от Всемирной организации здравоохранения. Здесь, в отличие от других тестов, чем выше балл — тем лучше.',
+    instruction:'За последние 2 недели:',
+    options:[{v:5,label:'Всё время'},{v:4,label:'Большую часть времени'},{v:3,label:'Больше половины времени'},{v:2,label:'Меньше половины времени'},{v:1,label:'Изредка'},{v:0,label:'Никогда'}],
+    questions:[
+      {t:'Я чувствовал(а) себя бодро и в хорошем настроении'},
+      {t:'Я чувствовал(а) себя спокойно и расслабленно'},
+      {t:'Я чувствовал(а) себя активным(ой) и энергичным(ой)'},
+      {t:'Я просыпался(ась) свежим(ей) и отдохнувшим(ей)'},
+      {t:'Моя жизнь была наполнена интересными для меня вещами'}
+    ],
+    score(ans){
+      const val=ans.reduce((a,b)=>a+b,0)*4;
+      if(val>=51) return {value:val,max:100,level:'low',color:'#2EAA82',title:'Хорошее самочувствие',
+        analysis:'Твоё эмоциональное благополучие на хорошем уровне: достаточно энергии, спокойствия и интереса к жизни. Это ценный ресурс.',
+        steps:['Продолжай то, что работает: сон, движение, общение, интересные дела.']};
+      if(val>=29) return {value:val,max:100,level:'mid',color:'#F5A623',title:'Самочувствие снижено',
+        analysis:'Ресурс просел: бодрости, спокойствия или интереса стало меньше, чем хотелось бы. Это ещё не депрессия, но повод мягко о себе позаботиться.',
+        steps:['Добавь в неделю приятные активности и реальный отдых.','Загляни в «Техники» и последи за сном.']};
+      return {value:val,max:100,level:'high',color:'#E05A5A',title:'Низкое самочувствие',
+        analysis:'Индекс благополучия низкий (28 и ниже). По рекомендациям ВОЗ это повод пройти более подробную проверку настроения и обратиться за поддержкой.',
+        steps:['Рекомендуется обратиться к специалисту — Психологическая служба ЮФУ бесплатна.','Не оставайся с этим один(одна): поговори с Менталом или близкими.']};
+    }
+  },
+  phq9: {
+    name:'Настроение', full:'Шкала депрессии PHQ-9', category:'Настроение и самочувствие',
+    source:'PHQ-9 · Kroenke, Spitzer & Williams, 2001',
+    intro:'Один из самых известных скринингов настроения в мире. 9 вопросов о последних двух неделях. Это не диагноз — это самооценка.',
+    instruction:'За последние 2 недели как часто вас беспокоило:',
+    options:[{v:0,label:'Совсем нет'},{v:1,label:'Несколько дней'},{v:2,label:'Больше половины дней'},{v:3,label:'Почти каждый день'}],
+    questions:[
+      {t:'Снижение интереса или удовольствия от занятий'},
+      {t:'Подавленное настроение, уныние или безнадёжность'},
+      {t:'Трудности с засыпанием, прерывистый сон или слишком долгий сон'},
+      {t:'Усталость или упадок сил'},
+      {t:'Плохой аппетит или переедание'},
+      {t:'Плохое мнение о себе — ощущение, что вы неудачник(ца) или подвели себя/близких'},
+      {t:'Трудности с концентрацией (учёба, чтение, видео)'},
+      {t:'Заторможенность или, наоборот, суетливость, заметные окружающим'},
+      {t:'Мысли о том, что лучше бы вас не было, или о причинении себе вреда'}
+    ],
+    score(ans){
+      const total=ans.reduce((a,b)=>a+b,0);
+      const crisis=ans[8]>=1;
+      let r;
+      if(total<=4) r={value:total,max:27,level:'low',color:'#2EAA82',title:'Настроение в норме',
+        analysis:'Выраженных признаков сниженного настроения сейчас нет. Отдельные спады — нормальная часть жизни.',
+        steps:['Продолжай заботиться о сне, движении и общении.']};
+      else if(total<=14) r={value:total,max:27,level:'mid',color:'#F5A623',title:'Лёгкое / умеренное снижение',
+        analysis:'Есть признаки сниженного настроения. Это частое состояние, особенно в нагруженные периоды, и с ним можно работать. Последи за динамикой.',
+        steps:['Добавь приятные и посильные активности, даже маленькие.','Техники и режим сна — в разделе «Техники».','Если держится дольше двух недель — стоит обратиться к специалисту.']};
+      else r={value:total,max:27,level:'high',color:'#E05A5A',title:'Выраженное снижение настроения',
+        analysis:'Показатель высокий. Такое состояние заметно мешает жить и учиться, и важно не оставаться с ним наедине. Это поддаётся помощи.',
+        steps:['При выраженном снижении настроения рекомендуется обратиться к психотерапевту или психиатру — именно так работают с депрессией.','Психологическая служба ЮФУ — бесплатно для студентов.','Разбирай тяжёлые мысли в «Дневнике мыслей» (модель ABC).','Расскажи близким или Менталу о том, что происходит.']};
+      if(crisis){
+        r.level='high'; r.color='#E05A5A';
+        r.analysis='⚠️ Ты отметил(а), что бывают мысли о том, что лучше бы тебя не было, или о причинении себе вреда. Это важный сигнал — пожалуйста, не оставайся с этим один(одна). '+r.analysis;
+        r.steps=['📞 Прямо сейчас: телефон доверия 8-800-2000-122 (бесплатно, круглосуточно) или 112.','🏫 Обратись в Психологическую службу ЮФУ как можно скорее — это бесплатно.','Поговори с близким человеком или напиши Менталу — я рядом.'];
+      }
+      return r;
+    }
+  },
+  swls: {
+    name:'Удовлетворённость жизнью', full:'Шкала удовлетворённости жизнью', category:'Настроение и самочувствие', higherBetter:true,
+    source:'SWLS · Diener et al., 1985',
+    intro:'Классическая шкала того, насколько человек в целом доволен своей жизнью. 5 утверждений. Чем выше балл — тем лучше.',
+    instruction:'Насколько ты согласен(на):',
+    options:[{v:1,label:'Полностью не согласен'},{v:2,label:'Не согласен'},{v:3,label:'Скорее не согласен'},{v:4,label:'Затрудняюсь'},{v:5,label:'Скорее согласен'},{v:6,label:'Согласен'},{v:7,label:'Полностью согласен'}],
+    questions:[
+      {t:'В большинстве отношений моя жизнь близка к идеалу.'},
+      {t:'Условия моей жизни превосходны.'},
+      {t:'Я доволен(льна) своей жизнью.'},
+      {t:'Пока что я получил(а) в жизни важные для меня вещи.'},
+      {t:'Если бы я мог(ла) прожить жизнь заново, я почти ничего не изменил(а) бы.'}
+    ],
+    score(ans){
+      const total=ans.reduce((a,b)=>a+b,0);
+      if(total>=26) return {value:total,max:35,level:'low',color:'#2EAA82',title:'Высокая удовлетворённость',
+        analysis:'Ты в целом доволен(льна) тем, как складывается твоя жизнь. Это устойчивая опора, которая помогает справляться с трудностями.',
+        steps:['Замечай и цени то, что уже хорошо — это укрепляет удовлетворённость.']};
+      if(total>=20) return {value:total,max:35,level:'mid',color:'#F5A623',title:'Средняя удовлетворённость',
+        analysis:'В жизни есть и то, что радует, и то, чем ты недоволен(льна). Нормальное рабочее состояние, но стоит присмотреться, какие сферы просели.',
+        steps:['Определи 1–2 сферы, которые хочется улучшить, и маленький шаг в каждой.']};
+      return {value:total,max:35,level:'high',color:'#E05A5A',title:'Низкая удовлетворённость',
+        analysis:'Сейчас ты скорее не доволен(льна) тем, как идёт жизнь. Это бывает в тяжёлые периоды и не является приговором — многое можно изменить, в том числе с поддержкой.',
+        steps:['Обсуди, что хотелось бы изменить, с Менталом — разложим на шаги.','Если тяжело давно — поддержка Психологической службы ЮФУ бесплатна.']};
+    }
+  },
+  rosenberg: {
+    name:'Самооценка', full:'Шкала самоуважения Розенберга', category:'Самооценка и ресурсы', higherBetter:true,
+    source:'RSES · Rosenberg, 1965',
+    intro:'Самая известная в мире шкала самооценки. 10 утверждений о том, как ты относишься к себе.',
+    instruction:'Насколько ты согласен(на):',
+    options:[{v:0,label:'Совершенно не согласен'},{v:1,label:'Не согласен'},{v:2,label:'Согласен'},{v:3,label:'Полностью согласен'}],
+    questions:[
+      {t:'В целом я удовлетворён(а) собой.'},
+      {t:'Иногда мне кажется, что я ни на что не годен(дна).',rev:true},
+      {t:'Я чувствую, что у меня есть ряд хороших качеств.'},
+      {t:'Я способен(на) делать дела не хуже большинства других людей.'},
+      {t:'Мне кажется, что мне особо нечем гордиться.',rev:true},
+      {t:'Иногда я чувствую себя бесполезным(ой).',rev:true},
+      {t:'Я чувствую, что я достойный человек — не хуже других.'},
+      {t:'Мне хотелось бы больше уважать себя.',rev:true},
+      {t:'В целом я склонен(нна) считать себя неудачником(цей).',rev:true},
+      {t:'Я отношусь к себе положительно.'}
+    ],
+    score(ans){
+      let total=0; ans.forEach((a,i)=>total+=this.questions[i].rev?(3-a):a);
+      if(total>=25) return {value:total,max:30,level:'low',color:'#2EAA82',title:'Здоровая самооценка',
+        analysis:'Ты в целом уважаешь и принимаешь себя. Устойчивая самооценка помогает спокойнее переносить критику и неудачи.',
+        steps:['Продолжай опираться на свои сильные стороны и реальные достижения.']};
+      if(total>=15) return {value:total,max:30,level:'mid',color:'#F5A623',title:'Умеренная самооценка',
+        analysis:'Самооценка в среднем диапазоне: в чём-то ты себя ценишь, в чём-то сомневаешься. Это нормально и вполне можно укреплять.',
+        steps:['Веди список своих маленьких побед — мозг склонен их обесценивать.','Замечай внутреннего критика и мягко его оспаривай.']};
+      return {value:total,max:30,level:'high',color:'#E05A5A',title:'Сниженная самооценка',
+        analysis:'Сейчас ты относишься к себе довольно критично и, возможно, часто чувствуешь себя «недостаточным(ой)». Самооценку можно укрепить — это навык, а не данность.',
+        steps:['Попробуй технику «список сильных сторон» и фиксируй успехи.','Самокритичные мысли разбирай в «Дневнике мыслей» (модель ABC).','С самооценкой хорошо работают психологи — служба ЮФУ бесплатна.','Обсуди это с Менталом — разберём, откуда берётся самокритика.']};
+    }
+  },
+  brs: {
+    name:'Жизнестойкость', full:'Краткая шкала жизнестойкости', category:'Самооценка и ресурсы', higherBetter:true,
+    source:'BRS · Smith et al., 2008',
+    intro:'Шкала измеряет, насколько быстро ты восстанавливаешься после стресса и трудностей. 6 утверждений.',
+    instruction:'Насколько ты согласен(на):',
+    options:[{v:1,label:'Совсем не согласен'},{v:2,label:'Не согласен'},{v:3,label:'Нейтрально'},{v:4,label:'Согласен'},{v:5,label:'Полностью согласен'}],
+    questions:[
+      {t:'Я быстро восстанавливаюсь после трудных времён.'},
+      {t:'Мне трудно пережить стрессовые события.',rev:true},
+      {t:'Мне не нужно много времени, чтобы прийти в себя после стресса.'},
+      {t:'Мне тяжело вернуться в норму, когда случается что-то плохое.',rev:true},
+      {t:'Я обычно прохожу через трудные времена без особых проблем.'},
+      {t:'Мне свойственно долго приходить в себя после неудач.',rev:true}
+    ],
+    score(ans){
+      let sum=0; ans.forEach((a,i)=>sum+=this.questions[i].rev?(6-a):a);
+      const avg=Math.round(sum/ans.length*10)/10;
+      if(avg>4.3) return {value:avg,max:5,level:'low',color:'#2EAA82',title:'Высокая жизнестойкость',
+        analysis:'Ты хорошо восстанавливаешься после стресса и неудач. Это сильный ресурс, который защищает от выгорания и тревоги.',
+        steps:['Продолжай опираться на то, что помогает тебе приходить в себя.']};
+      if(avg>=3) return {value:avg,max:5,level:'mid',color:'#F5A623',title:'Средняя жизнестойкость',
+        analysis:'Ты восстанавливаешься после трудностей, но иногда это занимает время. Жизнестойкость тренируется — её можно укрепить.',
+        steps:['Опора на людей, режим и маленькие ритуалы ускоряют восстановление.','Загляни в «Техники» — там есть приёмы для перезагрузки.']};
+      return {value:avg,max:5,level:'high',color:'#E05A5A',title:'Низкая жизнестойкость',
+        analysis:'Сейчас тебе тяжело приходить в себя после стресса — неудачи «выбивают» надолго. Это не черта характера навсегда, а навык, который можно развивать, в том числе с поддержкой.',
+        steps:['Не оставайся один(одна) с трудным — поддержка ускоряет восстановление.','Психологическая служба ЮФУ поможет укрепить устойчивость, бесплатно.']};
+    }
+  },
+  cbi: {
+    name:'Выгорание', full:'Опросник выгорания (истощение)', category:'Учёба и жизнь студента',
+    source:'CBI · Kristensen et al., 2005',
+    intro:'Шкала личного выгорания из Копенгагенского опросника. 6 вопросов о том, как часто ты истощён(а).',
+    instruction:'Как часто вы испытываете это:',
+    options:[{v:100,label:'Всегда'},{v:75,label:'Часто'},{v:50,label:'Иногда'},{v:25,label:'Редко'},{v:0,label:'Никогда / почти никогда'}],
+    questions:[
+      {t:'Как часто вы чувствуете усталость?'},
+      {t:'Как часто вы физически истощены?'},
+      {t:'Как часто вы эмоционально истощены?'},
+      {t:'Как часто вы думаете: «Я больше не могу»?'},
+      {t:'Как часто вы чувствуете себя измотанным(ой)?'},
+      {t:'Как часто вам не хватает сил на повседневные дела?'}
+    ],
+    score(ans){
+      const val=Math.round(ans.reduce((a,b)=>a+b,0)/ans.length);
+      if(val<50) return {value:val,max:100,level:'low',color:'#2EAA82',title:'Выгорания нет',
+        analysis:'Уровень истощения низкий — энергии на учёбу и жизнь в целом хватает. Хороший признак.',
+        steps:['Следи за балансом «учёба/отдых», чтобы не доводить до истощения.']};
+      if(val<75) return {value:val,max:100,level:'mid',color:'#F5A623',title:'Умеренное выгорание',
+        analysis:'Накопилась усталость — физическая и эмоциональная. Это ранняя стадия выгорания, когда ещё легко развернуть ситуацию отдыхом и режимом.',
+        steps:['Запланируй «разгрузочный день» без чувства вины.','Добавь сон и восстановление; при возможности обсуди нагрузку с научруком/куратором.']};
+      return {value:val,max:100,level:'high',color:'#E05A5A',title:'Высокое выгорание',
+        analysis:'Сильное истощение. Это не слабость, а перегруз, который копился долго. Без восстановления он бьёт по здоровью, учёбе и настроению.',
+        steps:['Разреши себе замедлиться — сдать на тройку и остаться в ресурсе лучше, чем выгореть в ноль.','Обратись в Психологическую службу ЮФУ (бесплатно).','Поговори с Менталом о том, что именно выматывает.']};
+    }
+  },
+  ucla3: {
+    name:'Одиночество', full:'Шкала одиночества UCLA', category:'Учёба и жизнь студента',
+    source:'UCLA Loneliness Scale (3-item) · Hughes et al., 2004',
+    intro:'Короткая шкала чувства одиночества. 3 вопроса. Одиночество в студенчестве — частая и нормальная тема, о которой редко говорят вслух.',
+    instruction:'Как часто вы чувствуете…',
+    options:[{v:1,label:'Почти никогда'},{v:2,label:'Иногда'},{v:3,label:'Часто'}],
+    questions:[
+      {t:'…что вам не хватает близкого общения и компании?'},
+      {t:'…что вы оставлены в стороне, обделены вниманием?'},
+      {t:'…что вы изолированы от других?'}
+    ],
+    score(ans){
+      const total=ans.reduce((a,b)=>a+b,0);
+      if(total<=5) return {value:total,max:9,level:'low',color:'#2EAA82',title:'Одиночество не беспокоит',
+        analysis:'Ты в целом чувствуешь достаточную связь с людьми. Социальная поддержка — важный защитный фактор для психики.',
+        steps:['Береги связи, которые тебя поддерживают.']};
+      if(total<=7) return {value:total,max:9,level:'mid',color:'#F5A623',title:'Иногда одиноко',
+        analysis:'Временами тебе не хватает близости и включённости. Для студента (особенно первокурсника или в общаге) это обычное дело, но об этом стоит позаботиться.',
+        steps:['Маленький шаг навстречу людям важнее, чем кажется: написать, позвать, прийти.','В ЮФУ много студсообществ и мероприятий — это рабочий способ найти «своих».']};
+      return {value:total,max:9,level:'high',color:'#E05A5A',title:'Выраженное одиночество',
+        analysis:'Ты часто чувствуешь себя изолированным(ой). Длительное одиночество заметно влияет на настроение и самочувствие — с этим стоит бережно поработать.',
+        steps:['Не обесценивай это — одиночество реально тяжело, и ты не один(одна) в нём.','Психологическая служба ЮФУ поможет мягко это разобрать, бесплатно.','Расскажи Менталу — вместе подумаем, с чего начать.']};
     }
   }
 };
 
-const testState = { stress: { answers:[], q:0, done:false }, burnout: { answers:[], q:0, done:false } };
+let activeTest = null;
+const testState = {};
+
+function openTest(id) {
+  if (!testState[id] || testState[id].done) testState[id] = { answers:[], q:0, done:false };
+  activeTest = id;
+  showView('test');
+  setActiveNav('[data-test="' + id + '"]');
+  document.getElementById('topbar-title').textContent = TESTS[id].full;
+  document.getElementById('topbar-sub').textContent = TESTS[id].source;
+  closeSidebar();
+  renderTest(id);
+}
 
 function renderTest(id) {
-  const test = TESTS[id];
-  const state = testState[id];
-  const container = document.getElementById('test-' + id + '-inner');
-
-  if (state.done) {
-    renderTestResult(id, container);
-    return;
-  }
-
-  const q = state.q;
-  const total = test.questions.length;
-  const pct = Math.round(q / total * 100);
-
+  const test = TESTS[id], state = testState[id];
+  const container = document.getElementById('test-inner');
+  if (state.done) { renderTestResult(id, container); return; }
+  const q = state.q, total = test.questions.length, pct = Math.round(q / total * 100);
   container.innerHTML = `
     <div class="test-header">
-      <h2>${test.name}</h2>
-      <p>${q === 0 ? test.intro : test.questions[q - 1] ? 'Продолжаем...' : ''}</p>
+      <h2>${test.full}</h2>
+      <p>${q === 0 ? test.intro : test.instruction}</p>
+      <div class="test-source">${test.source}</div>
       <div class="test-progress-bar"><div class="test-progress-fill" style="width:${pct}%"></div></div>
-      <div class="test-question-num">${q} из ${total}</div>
+      <div class="test-question-num">Вопрос ${q + 1} из ${total}</div>
     </div>
     <div class="test-question-card">
-      <div class="test-question-text">${test.questions[q] || ''}</div>
-      <div class="scale-options">
-        ${[1,2,3,4,5].map(n => `<button class="scale-btn" onclick="answerTest('${id}',${n})">${n}</button>`).join('')}
+      <div class="test-question-text">${test.questions[q].t}</div>
+      <div class="opt-list">
+        ${test.options.map(o => `<button class="opt-btn" onclick="answerTest('${id}',${o.v})">${o.label}</button>`).join('')}
       </div>
-      <div class="scale-labels"><span>Совсем нет</span><span>Очень часто</span></div>
     </div>`;
 }
 
-function answerTest(id, score) {
-  const state = testState[id];
-  const test = TESTS[id];
-  state.answers.push(score);
+function answerTest(id, value) {
+  const state = testState[id], test = TESTS[id];
+  state.answers.push(value);
   state.q++;
   if (state.q >= test.questions.length) {
     state.done = true;
-    renderTestResult(id, document.getElementById('test-' + id + '-inner'));
+    renderTestResult(id, document.getElementById('test-inner'));
   } else {
     renderTest(id);
   }
 }
 
 function renderTestResult(id, container) {
-  const state = testState[id];
-  const test = TESTS[id];
-  const sum = state.answers.reduce((a,b) => a+b, 0);
-  const r = test.getResult(sum);
+  const test = TESTS[id], state = testState[id];
+  const r = test.score(state.answers);
+  saveTestResult(id, r);
+  const emoji = r.level === 'low' ? '🟢' : (r.level === 'mid' ? '🟡' : '🔴');
+  const pct = Math.round(r.value / r.max * 100);
   container.innerHTML = `
     <div class="test-header">
-      <h2>${test.name}</h2>
-      <p>Тест завершён</p>
-      <div class="test-progress-bar"><div class="test-progress-fill" style="width:100%"></div></div>
-      <div class="test-question-num">${test.questions.length} из ${test.questions.length}</div>
+      <h2>${test.full}</h2>
+      <p>Результат</p>
+      <div class="test-source">${test.source}</div>
     </div>
     <div class="test-result">
-      <div class="test-result-emoji">${r.emoji}</div>
+      <div class="test-result-emoji">${emoji}</div>
       <h3>${r.title}</h3>
-      <div class="test-result-score-bar">
-        <div class="test-result-score-fill" style="width:0%;background:${r.color}" id="score-fill-${id}"></div>
-      </div>
-      <p class="test-result-desc">${r.desc}</p>
+      <div class="test-score-num" style="color:${r.color}">${r.value} <span>/ ${r.max}</span></div>
+      <div class="test-result-score-bar"><div class="test-result-score-fill" id="score-fill" style="width:0;background:${r.color}"></div></div>
+      <p class="test-analysis">${r.analysis}</p>
+      <div class="test-steps-head">Что можно сделать</div>
+      <ul class="test-steps">${r.steps.map(s => `<li>${s}</li>`).join('')}</ul>
+      <p class="test-disclaimer">Это скрининговая самооценка по валидированной шкале, а не диагноз. За диагнозом — к специалисту. Психологическая служба ЮФУ — бесплатно для студентов.</p>
       <div class="test-result-actions">
-        <button class="btn-ghost" onclick="retakeTest('${id}')">🔄 Пройти заново</button>
+        <button class="btn-ghost" onclick="openTest('${id}')">🔄 Пройти заново</button>
+        <button class="btn-ghost" onclick="switchView('results')">📈 Моя динамика</button>
         <button class="btn-primary" style="font-size:.88rem;padding:10px 20px" onclick="switchView('chat')">💬 Обсудить с Менталом</button>
       </div>
     </div>`;
-  setTimeout(() => {
-    const fill = document.getElementById('score-fill-' + id);
-    if (fill) fill.style.width = r.pct + '%';
-  }, 100);
+  setTimeout(() => { const f = document.getElementById('score-fill'); if (f) f.style.width = pct + '%'; }, 100);
 }
 
-function retakeTest(id) {
-  testState[id] = { answers:[], q:0, done:false };
-  renderTest(id);
+// ── Хранение результатов и динамика ──
+function saveTestResult(id, r) {
+  let h = [];
+  try { h = JSON.parse(localStorage.getItem('mental_tests') || '[]'); } catch(e) {}
+  h.push({ id, value:r.value, max:r.max, level:r.level, title:r.title, color:r.color, ts:Date.now(), date:new Date().toLocaleDateString('ru') });
+  if (h.length > 300) h = h.slice(-300);
+  try { localStorage.setItem('mental_tests', JSON.stringify(h)); } catch(e) {}
+}
+
+function plural(n, one, few, many) {
+  const m10 = n % 10, m100 = n % 100;
+  if (m10 === 1 && m100 !== 11) return one;
+  if (m10 >= 2 && m10 <= 4 && (m100 < 10 || m100 >= 20)) return few;
+  return many;
+}
+
+function renderResults() {
+  const container = document.getElementById('results-inner');
+  let h = [];
+  try { h = JSON.parse(localStorage.getItem('mental_tests') || '[]'); } catch(e) {}
+  if (!h.length) {
+    container.innerHTML = `<div class="results-head"><h2>Мои результаты</h2></div>
+      <div class="results-empty">Здесь появится твоя динамика.<br>Пройди любой тест из раздела «Тесты» — и увидишь, как меняются показатели со временем.</div>`;
+    return;
+  }
+  let html = `<div class="results-head"><h2>Мои результаты</h2><p>Как меняются твои показатели со временем. Проходи тесты регулярно — тренд важнее одной точки.</p></div>`;
+  Object.keys(TESTS).forEach(id => {
+    const runs = h.filter(x => x.id === id);
+    if (!runs.length) return;
+    const last = runs[runs.length - 1], test = TESTS[id];
+    html += `<div class="result-card">
+      <div class="result-card-top">
+        <div><div class="result-card-name">${test.full}</div>
+        <div class="result-card-sub">${runs.length} ${plural(runs.length,'прохождение','прохождения','прохождений')} · ${test.higherBetter ? 'выше — лучше' : 'ниже — лучше'}</div></div>
+        <div class="result-badge" style="background:${last.color}22;color:${last.color}">${last.title} · ${last.value}/${last.max}</div>
+      </div>
+      <canvas class="result-canvas" data-test="${id}" height="90"></canvas>
+    </div>`;
+  });
+  container.innerHTML = html;
+  Object.keys(TESTS).forEach(id => {
+    const runs = h.filter(x => x.id === id);
+    if (!runs.length) return;
+    const canvas = container.querySelector('.result-canvas[data-test="' + id + '"]');
+    if (canvas) drawResultChart(canvas, runs, runs[0].max);
+  });
+}
+
+function drawResultChart(canvas, runs, max) {
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const W = canvas.parentElement.clientWidth || 400, H = 90;
+  canvas.width = W * dpr; canvas.height = H * dpr;
+  canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+  ctx.scale(dpr, dpr);
+  const isDark = document.documentElement.dataset.theme === 'dark' ||
+    (!document.documentElement.dataset.theme && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  const grid = isDark ? '#2A3B5E' : '#D8E4F5', txt = isDark ? '#5A6E8E' : '#8A9AB8';
+  ctx.clearRect(0,0,W,H);
+  const pad = { t:10, r:12, b:22, l:30 }, iW = W - pad.l - pad.r, iH = H - pad.t - pad.b;
+  [0, 0.5, 1].forEach(f => {
+    const y = pad.t + iH - f * iH;
+    ctx.strokeStyle = grid; ctx.lineWidth = 1; ctx.setLineDash([4,4]);
+    ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(W - pad.r, y); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle = txt; ctx.font = '10px Inter,system-ui'; ctx.textAlign = 'right';
+    ctx.fillText(Math.round(f * max), pad.l - 6, y + 3);
+  });
+  const pts = runs.map((r,i) => ({
+    x: pad.l + (runs.length === 1 ? iW/2 : (i/(runs.length-1))*iW),
+    y: pad.t + iH - (r.value/max) * iH, c: r.color, d: r.date
+  }));
+  ctx.strokeStyle = '#3D7FD4'; ctx.lineWidth = 2.5; ctx.lineJoin = 'round';
+  ctx.beginPath(); pts.forEach((p,i) => i ? ctx.lineTo(p.x,p.y) : ctx.moveTo(p.x,p.y)); ctx.stroke();
+  ctx.font = '10px Inter,system-ui'; ctx.textAlign = 'center';
+  pts.forEach((p,i) => {
+    ctx.beginPath(); ctx.arc(p.x, p.y, 4, 0, Math.PI*2); ctx.fillStyle = p.c; ctx.fill();
+    ctx.strokeStyle = isDark ? '#0F1A2E' : '#F2F6FF'; ctx.lineWidth = 2; ctx.stroke();
+    if (i === 0 || i === pts.length - 1) { ctx.fillStyle = txt; ctx.fillText(p.d.slice(0,5), p.x, H - 6); }
+  });
+}
+
+// ── Библиотека техник ──
+const TECHNIQUES = [
+  { cat:'Как устроены эмоции', items:[
+    { icon:'💡', name:'Модель ABC: откуда берутся эмоции', when:'Чтобы понимать и менять своё состояние', how:'Эмоции рождаются не от самих событий, а от наших мыслей о них. A (ситуация) — что произошло. B (мысль) — как ты это оценил, что подумал. C (эмоция и реакция) — что в итоге почувствовал и как поступил. Один и тот же факт при разных мыслях даёт разные эмоции. Пример: тебе не ответили на сообщение (A). Мысль «я надоел, на меня обиделись» (B) → тревога и грусть (C). Мысль «человек занят, ответит позже» (B) → спокойствие (C). Само событие часто изменить нельзя, а вот мысль (B) — можно заметить и пересмотреть, и тогда меняется эмоция. Именно это ты и делаешь в «Дневнике мыслей». Понимать, как устроена твоя реакция, — уже половина контроля над ней.' }
+  ]},
+  { cat:'Тревога и стресс', items:[
+    { icon:'🌬️', name:'Дыхание 4-7-8', when:'Когда накрывает тревога или паника', how:'Вдох через нос на 4 счёта → задержка на 7 → медленный выдох на 8. Повтори 4–5 раз. Снижает возбуждение нервной системы.' },
+    { icon:'🌍', name:'Заземление 5-4-3-2-1', when:'Когда «уносит» в тревожные мысли', how:'Назови 5 вещей, которые видишь, 4 — которые ощущаешь телом, 3 звука, 2 запаха, 1 вкус. Возвращает в настоящий момент.' },
+    { icon:'🔍', name:'Разбор худшего сценария', when:'Когда крутишь катастрофу в голове', how:'Спроси себя: что худшее реально может случиться? Насколько это вероятно? Что я смогу с этим сделать? Часто страх больше реальности.' }
+  ]},
+  { cat:'Нет сил и мотивации', items:[
+    { icon:'⏱️', name:'Правило 5 минут', when:'Когда вообще не хочется начинать', how:'Договорись с собой делать дело всего 5 минут. Чаще всего после старта втягиваешься и продолжаешь.' },
+    { icon:'🎯', name:'Микро-цели', when:'Когда задача кажется огромной', how:'Разбей на шаги по 10–15 минут. Отмечай сделанное — каждая галочка заряжает на следующий шаг.' }
+  ]},
+  { cat:'Прокрастинация и фокус', items:[
+    { icon:'🍅', name:'Метод «помидора»', when:'Когда не можешь сосредоточиться', how:'25 минут только задача (телефон — в другую комнату) → 5 минут отдыха. После 4 циклов — длинный перерыв 15–30 минут.' },
+    { icon:'✌️', name:'Правило 2 минут', when:'Когда откладываешь старт', how:'Начни и поработай ровно 2 минуты, без цели сделать много. Инерция движения сделает остальное.' }
+  ]},
+  { cat:'Сон и восстановление', items:[
+    { icon:'🌙', name:'Гигиена сна', when:'Когда не высыпаешься или сбит режим', how:'Ложись и вставай примерно в одно и то же время — даже в выходные, иначе режим «гуляет». За час до сна убери экраны: телефон и ноут светят синим, а он сбивает выработку мелатонина. Кофе, энергетики и крепкий чай — не позже 16:00, они держат бодрость до 6–8 часов. Спальня: тёмная, тихая, прохладная (18–20°). Кровать — только для сна, не для учёбы и сериалов, чтобы мозг связывал её именно со сном. Не можешь уснуть 20 минут — встань, займись чем-то спокойным при тусклом свете и вернись, когда потянет в сон (ворочаться и злиться — хуже). Днём — больше дневного света и движения, они улучшают ночной сон. Сон — это база для памяти, настроения и концентрации, а не роскошь: на недосыпе тяжелее всё.' },
+    { icon:'🚶', name:'Пауза-перезагрузка', when:'Когда мозг «кипит» от учёбы', how:'90 минут работы → 15–20 минут реального отдыха: прогулка, растяжка, вода. Не телефон — он не восстанавливает.' }
+  ]}
+];
+
+function renderTechniques() {
+  const c = document.getElementById('techniques-inner');
+  let html = `<div class="results-head"><h2>Библиотека техник</h2><p>Простые приёмы, которые реально работают. Выбери по ситуации и попробуй прямо сейчас.</p></div>`;
+  TECHNIQUES.forEach(g => {
+    html += `<div class="tech-cat">${g.cat}</div>`;
+    g.items.forEach(t => {
+      html += `<div class="tech-card"><div class="tech-icon">${t.icon}</div><div class="tech-body">
+        <div class="tech-name">${t.name}</div><div class="tech-when">${t.when}</div><div class="tech-how">${t.how}</div>
+      </div></div>`;
+    });
+  });
+  c.innerHTML = html;
+}
+
+// ── Каталог тестов ──
+function renderCatalog() {
+  const c = document.getElementById('tests-inner');
+  const cats = {};
+  Object.keys(TESTS).forEach(id => { const t = TESTS[id]; (cats[t.category] = cats[t.category] || []).push(id); });
+  let hist = []; try { hist = JSON.parse(localStorage.getItem('mental_tests') || '[]'); } catch(e) {}
+  const lastOf = id => { const r = hist.filter(x => x.id === id); return r.length ? r[r.length-1] : null; };
+  let html = `<div class="results-head"><h2>Психологические тесты</h2><p>Научные методики, которые применяют в исследованиях и практике. Все вопросы, подсчёт и разбор — внутри. Результаты видишь только ты.</p></div>`;
+  Object.keys(cats).forEach(cat => {
+    html += `<div class="tech-cat">${cat}</div>`;
+    cats[cat].forEach(id => {
+      const t = TESTS[id], last = lastOf(id);
+      const badge = last
+        ? `<span class="cat-badge" style="background:${last.color}22;color:${last.color}">${last.title}</span>`
+        : `<span class="cat-badge cat-badge-new">не пройден</span>`;
+      html += `<div class="catalog-card" onclick="openTest('${id}')">
+        <div class="catalog-main">
+          <div class="catalog-name">${t.full}</div>
+          <div class="catalog-meta">${t.questions.length} ${plural(t.questions.length,'вопрос','вопроса','вопросов')} · ${t.source}</div>
+        </div>
+        <div class="catalog-right">${badge}<span class="catalog-arrow">→</span></div>
+      </div>`;
+    });
+  });
+  html += `<div id="catalog-custom"></div>`;
+  c.innerHTML = html;
+  pltAppendPublishedTests();
+}
+
+// ═══════════════════════════════════════════
+// ПЛАТФОРМА: роли, вход, кабинет, конструктор тестов (Этап 3)
+// ═══════════════════════════════════════════
+const PLATFORM = { me: null };
+function pltEsc(s){ return (s==null?'':String(s)).replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function pltVal(id){ const e=document.getElementById(id); return e ? e.value.trim() : ''; }
+function pfToken(){ try { return localStorage.getItem('platform_token') || ''; } catch(e){ return ''; } }
+function pfSetToken(t){ try { if(t) localStorage.setItem('platform_token', t); else localStorage.removeItem('platform_token'); } catch(e){} }
+
+async function pfApi(path, opts={}){
+  const headers = Object.assign({'Content-Type':'application/json'}, opts.headers || {});
+  const t = pfToken(); if(t) headers['Authorization'] = 'Bearer ' + t;
+  const r = await fetch('/api/platform' + path, Object.assign({}, opts, {headers}));
+  let data = null; try { data = await r.json(); } catch(e){}
+  if(!r.ok){ throw new Error((data && data.detail) || ('Ошибка ' + r.status)); }
+  return data;
+}
+async function pfRefreshMe(){
+  if(!pfToken()){ PLATFORM.me = null; updatePlatformNav(); return null; }
+  try { const me = await pfApi('/me'); PLATFORM.me = (me && me.role) ? me : null; if(!PLATFORM.me) pfSetToken(null); }
+  catch(e){ PLATFORM.me = null; pfSetToken(null); }
+  updatePlatformNav(); return PLATFORM.me;
+}
+function roleRu(r){ return r==='teacher' ? 'Преподаватель' : (r==='psychologist' ? 'Психолог' : r); }
+function updatePlatformNav(){
+  const el = document.getElementById('platform-nav'); if(!el) return;
+  if(PLATFORM.me){
+    el.innerHTML = `<div class="sidebar-section-label">${roleRu(PLATFORM.me.role)}</div>
+      <div class="nav-item" data-view="cabinet" onclick="switchView('cabinet')"><span class="nav-item-icon">🗂️</span> Кабинет</div>
+      <div class="nav-item" onclick="pfLogout()"><span class="nav-item-icon">🚪</span> Выйти</div>`;
+  } else {
+    el.innerHTML = `<div class="sidebar-section-label">Платформа</div>
+      <div class="nav-item" data-view="login" onclick="switchView('login')"><span class="nav-item-icon">🔑</span> Вход для сотрудников</div>`;
+  }
+}
+async function pfLogout(){ try { await pfApi('/logout', {method:'POST'}); } catch(e){} pfSetToken(null); PLATFORM.me=null; updatePlatformNav(); switchView('chat'); }
+
+// ── Вход / регистрация ──
+function renderLogin(){
+  const c = document.getElementById('login-inner'); if(!c) return;
+  if(PLATFORM.me){ switchView('cabinet'); return; }
+  c.innerHTML = `<div class="results-head"><h2>Вход для преподавателей и психологов</h2><p>Студентам вход не нужен — тесты и инструменты доступны сразу. Этот раздел для сотрудников ЮФУ, которые создают собственные тесты.</p></div>
+  <div class="profile-card" style="max-width:460px">
+    <div class="plt-tabs"><button class="plt-tab active" id="plt-tab-login" onclick="pltTab('login')">Вход</button><button class="plt-tab" id="plt-tab-signup" onclick="pltTab('signup')">Регистрация</button></div>
+    <div id="plt-form-login">
+      <label class="profile-field"><span>Логин</span><input id="plt-l-user" class="profile-input" autocomplete="username"></label>
+      <label class="profile-field"><span>Пароль</span><input id="plt-l-pass" class="profile-input" type="password" autocomplete="current-password"></label>
+      <button class="btn-primary" style="margin-top:10px" onclick="pfDoLogin()">Войти</button>
+    </div>
+    <div id="plt-form-signup" hidden>
+      <label class="profile-field"><span>Имя (как показывать)</span><input id="plt-s-name" class="profile-input"></label>
+      <label class="profile-field"><span>Логин</span><input id="plt-s-user" class="profile-input"></label>
+      <label class="profile-field"><span>Пароль (от 6 символов)</span><input id="plt-s-pass" class="profile-input" type="password"></label>
+      <label class="profile-field"><span>Роль</span><select id="plt-s-role" class="profile-input"><option value="teacher">Преподаватель</option><option value="psychologist">Психолог</option></select></label>
+      <label class="profile-field"><span>Код регистрации</span><input id="plt-s-code" class="profile-input" placeholder="выдаётся администратором"></label>
+      <button class="btn-primary" style="margin-top:10px" onclick="pfDoSignup()">Зарегистрироваться</button>
+    </div>
+    <div class="plt-msg" id="plt-msg"></div>
+  </div>`;
+}
+function pltTab(which){
+  document.getElementById('plt-form-login').hidden = which!=='login';
+  document.getElementById('plt-form-signup').hidden = which!=='signup';
+  document.getElementById('plt-tab-login').classList.toggle('active', which==='login');
+  document.getElementById('plt-tab-signup').classList.toggle('active', which==='signup');
+  const m=document.getElementById('plt-msg'); if(m) m.textContent='';
+}
+function pltMsg(t, ok){ const m=document.getElementById('plt-msg'); if(m){ m.textContent=t; m.style.color = ok ? '#2EAA82' : '#E05A5A'; } }
+async function pfDoLogin(){
+  try{
+    const pass = (document.getElementById('plt-l-pass')||{}).value || '';
+    const me = await pfApi('/login', {method:'POST', body:JSON.stringify({username:pltVal('plt-l-user'), password:pass})});
+    pfSetToken(me.token); PLATFORM.me = {username:me.username, role:me.role, name:me.name};
+    updatePlatformNav(); switchView('cabinet');
+  }catch(e){ pltMsg(e.message, false); }
+}
+async function pfDoSignup(){
+  try{
+    const pass = (document.getElementById('plt-s-pass')||{}).value || '';
+    const code = (document.getElementById('plt-s-code')||{}).value || '';
+    await pfApi('/signup', {method:'POST', body:JSON.stringify({name:pltVal('plt-s-name'), username:pltVal('plt-s-user'), password:pass, role:pltVal('plt-s-role'), admin_code:code})});
+    pltMsg('Аккаунт создан. Теперь войдите.', true); pltTab('login');
+  }catch(e){ pltMsg(e.message, false); }
+}
+
+// ── Кабинет сотрудника ──
+async function renderCabinet(){
+  const c = document.getElementById('cabinet-inner'); if(!c) return;
+  if(!PLATFORM.me){ await pfRefreshMe(); if(!PLATFORM.me){ switchView('login'); return; } }
+  c.innerHTML = `<div class="results-head"><h2>Кабинет — ${roleRu(PLATFORM.me.role)}</h2><p>Здесь вы создаёте собственные тесты и опросники. Опубликованные тесты студенты увидят в разделе «Тесты».</p></div>
+    <div style="margin-bottom:14px;display:flex;gap:10px;flex-wrap:wrap"><button class="btn-primary" onclick="pfOpenBuilder()">+ Создать тест</button><button class="plt-mini" onclick="pfShowSubmissions()">Ответы студентов</button></div>
+    <div id="plt-mytests">Загрузка…</div>`;
+  pfLoadMyTests();
+}
+async function pfLoadMyTests(){
+  const el = document.getElementById('plt-mytests'); if(!el) return;
+  try{
+    const list = await pfApi('/tests/mine');
+    if(!list.length){ el.innerHTML = '<div class="plt-note">Пока нет тестов. Нажмите «Создать тест».</div>'; return; }
+    el.innerHTML = '<div class="tech-cat">Мои тесты</div>' + list.map(t => `<div class="catalog-card"><div class="catalog-main"><div class="catalog-name">${pltEsc(t.title)}</div><div class="catalog-meta">${t.questions.length} ${plural(t.questions.length,'вопрос','вопроса','вопросов')} · ${t.published?'опубликован':'черновик'}</div></div><div class="catalog-right"><button class="plt-mini" onclick="pfDeleteTest('${t.id}')">Удалить</button></div></div>`).join('');
+  }catch(e){ el.innerHTML = '<div class="plt-note">Ошибка: ' + pltEsc(e.message) + '</div>'; }
+}
+async function pfDeleteTest(id){ if(!confirm('Удалить тест?')) return; try{ await pfApi('/tests/'+id, {method:'DELETE'}); pfLoadMyTests(); }catch(e){ alert(e.message); } }
+async function pfShowSubmissions(){
+  const c = document.getElementById('cabinet-inner'); if(!c) return;
+  if(!PLATFORM.me){ switchView('login'); return; }
+  c.innerHTML = `<div class="results-head"><h2>Ответы студентов</h2><p>Ответы на ваши тесты. Эти данные видны только вам. Студенты проходили тест с явного согласия.</p></div>
+    <div style="margin-bottom:12px"><button class="plt-mini" onclick="renderCabinet()">← Назад в кабинет</button></div>
+    <div id="plt-subs">Загрузка…</div>`;
+  try{
+    const list = await pfApi('/submissions');
+    const el = document.getElementById('plt-subs'); if(!el) return;
+    if(!list.length){ el.innerHTML = '<div class="plt-note">Пока нет ответов. Они появятся, когда студенты пройдут ваши тесты.</div>'; return; }
+    el.innerHTML = list.map(s => {
+      const d = new Date(s.created); const dt = isNaN(d.getTime()) ? '' : d.toLocaleString('ru-RU');
+      const entry = Object.entries(s.entry || {}).map(([k,v]) => `${pltEsc(k)}: ${pltEsc(v || '—')}`).join(' · ');
+      const res = s.result || {};
+      return `<div class="result-card"><div style="font-weight:600">${pltEsc(s.test_title || 'Тест')}</div><div class="catalog-meta">${dt}</div>${entry ? ('<div style="margin-top:6px">'+entry+'</div>') : '<div class="plt-note" style="margin-top:6px">Анкета не заполнялась</div>'}<div style="margin-top:6px">Результат: <b>${pltEsc(res.title || '—')}</b>${(res.total!=null) ? (' ('+res.total+' б.)') : ''}</div></div>`;
+    }).join('');
+  }catch(e){ const el=document.getElementById('plt-subs'); if(el) el.innerHTML = '<div class="plt-note">Ошибка: '+pltEsc(e.message)+'</div>'; }
+}
+
+// ── Конструктор теста ──
+function pfOpenBuilder(){
+  const c = document.getElementById('cabinet-inner'); if(!c) return;
+  c.innerHTML = `<div class="results-head"><h2>Новый тест</h2><p>Составьте тест: вопросы, варианты ответов с баллами и разбор результата по сумме баллов.</p></div>
+  <div class="profile-card" style="max-width:720px">
+    <label class="profile-field"><span>Название</span><input id="plt-title" class="profile-input" placeholder="Напр.: Опросник учебной мотивации"></label>
+    <label class="profile-field"><span>Короткое описание (необязательно)</span><input id="plt-intro" class="profile-input" placeholder="О чём этот тест"></label>
+    <label class="profile-field"><span>Инструкция (необязательно)</span><input id="plt-instr" class="profile-input" placeholder="Напр.: Оцените, насколько согласны:"></label>
+    <div class="plt-section-title">Варианты ответа (с баллами)</div>
+    <div id="plt-opts"></div>
+    <button class="plt-mini" onclick="pltAddOpt()">+ вариант</button>
+    <div class="plt-section-title">Вопросы</div>
+    <div id="plt-qs"></div>
+    <button class="plt-mini" onclick="pltAddQuestion()">+ вопрос</button>
+    <div class="plt-section-title">Разбор результата (по сумме баллов)</div>
+    <div id="plt-bands"></div>
+    <button class="plt-mini" onclick="pltAddBand()">+ диапазон</button>
+    <div class="plt-section-title">Анкета на входе (что спросить у студента перед тестом)</div>
+    <div class="plt-note" style="margin-top:0;margin-bottom:8px">Напр.: Группа, Курс, ФИО. Если оставить пустым — анкеты не будет. Студент в любом случае увидит предупреждение, что его ответы не анонимны и попадут к вам.</div>
+    <div id="plt-entries"></div>
+    <button class="plt-mini" onclick="pltAddEntry()">+ поле анкеты</button>
+    <label class="profile-field" style="flex-direction:row;align-items:center;gap:8px;margin-top:16px"><input type="checkbox" id="plt-pub" checked> <span>Опубликовать для студентов</span></label>
+    <div style="display:flex;gap:10px;margin-top:8px"><button class="btn-primary" onclick="pltSaveTest()">Сохранить тест</button><button class="plt-mini" onclick="renderCabinet()">Отмена</button></div>
+    <div class="plt-msg" id="plt-builder-msg"></div>
+  </div>`;
+  pltAddOpt('Нет', 0); pltAddOpt('Иногда', 1); pltAddOpt('Часто', 2);
+  pltAddQuestion(); pltAddQuestion();
+  pltAddBand('', '', ''); pltAddBand('', '', '');
+}
+function pltAddOpt(label='', v=''){ const w=document.getElementById('plt-opts'); if(!w) return; const d=document.createElement('div'); d.className='plt-row'; d.innerHTML=`<input class="profile-input plt-opt-label" placeholder="Вариант ответа" value="${pltEsc(label)}"><input class="profile-input plt-opt-v" type="number" style="flex:0 0 90px" placeholder="балл" value="${v}"><button class="plt-mini" onclick="this.closest('.plt-row').remove()">✕</button>`; w.appendChild(d); }
+function pltAddQuestion(t=''){ const w=document.getElementById('plt-qs'); if(!w) return; const d=document.createElement('div'); d.className='plt-row'; d.innerHTML=`<input class="profile-input plt-q-text" placeholder="Текст вопроса" value="${pltEsc(t)}"><button class="plt-mini" onclick="this.closest('.plt-row').remove()">✕</button>`; w.appendChild(d); }
+function pltAddBand(mx='', title='', analysis=''){ const w=document.getElementById('plt-bands'); if(!w) return; const d=document.createElement('div'); d.className='plt-row'; d.innerHTML=`<input class="profile-input plt-b-max" type="number" style="flex:0 0 110px" placeholder="до скольких баллов" value="${mx}"><input class="profile-input plt-b-title" placeholder="Название уровня" value="${pltEsc(title)}"><input class="profile-input plt-b-analysis" placeholder="Разбор / рекомендации" value="${pltEsc(analysis)}"><button class="plt-mini" onclick="this.closest('.plt-row').remove()">✕</button>`; w.appendChild(d); }
+function pltAddEntry(name=''){ const w=document.getElementById('plt-entries'); if(!w) return; const d=document.createElement('div'); d.className='plt-row'; d.innerHTML=`<input class="profile-input plt-entry-name" placeholder="Напр.: Группа" value="${pltEsc(name)}"><button class="plt-mini" onclick="this.closest('.plt-row').remove()">✕</button>`; w.appendChild(d); }
+async function pltSaveTest(){
+  const options = Array.from(document.querySelectorAll('#plt-opts .plt-row')).map(r=>({label:r.querySelector('.plt-opt-label').value.trim(), v:Number(r.querySelector('.plt-opt-v').value)||0})).filter(o=>o.label);
+  const questions = Array.from(document.querySelectorAll('#plt-qs .plt-row')).map(r=>({t:r.querySelector('.plt-q-text').value.trim()})).filter(q=>q.t);
+  const bands = Array.from(document.querySelectorAll('#plt-bands .plt-row')).map(r=>({max:Number(r.querySelector('.plt-b-max').value)||0, title:r.querySelector('.plt-b-title').value.trim(), analysis:r.querySelector('.plt-b-analysis').value.trim()})).filter(b=>b.title);
+  const entry_fields = Array.from(document.querySelectorAll('#plt-entries .plt-row')).map(r=>r.querySelector('.plt-entry-name').value.trim()).filter(Boolean);
+  const body = { title:pltVal('plt-title'), intro:pltVal('plt-intro'), instruction:pltVal('plt-instr'), options, questions, bands, entry_fields, published:document.getElementById('plt-pub').checked };
+  const msg = document.getElementById('plt-builder-msg');
+  if(!body.title || !questions.length || !options.length){ if(msg){ msg.style.color='#E05A5A'; msg.textContent='Нужны название, хотя бы один вопрос и хотя бы один вариант ответа.'; } return; }
+  try{ await pfApi('/tests', {method:'POST', body:JSON.stringify(body)}); renderCabinet(); }
+  catch(e){ if(msg){ msg.style.color='#E05A5A'; msg.textContent=e.message; } }
+}
+
+// ── Прохождение теста от сотрудника (студент; результат пока только локально) ──
+async function pltAppendPublishedTests(){
+  const host = document.getElementById('catalog-custom'); if(!host) return;
+  try{
+    const list = await pfApi('/tests/published');
+    if(!list || !list.length){ host.innerHTML=''; return; }
+    host.innerHTML = '<div class="tech-cat">Тесты от сотрудников ЮФУ</div>' + list.map(t => `<div class="catalog-card" onclick="openCustomTest('${t.id}')"><div class="catalog-main"><div class="catalog-name">${pltEsc(t.title)}</div><div class="catalog-meta">${t.questions.length} ${plural(t.questions.length,'вопрос','вопроса','вопросов')}${t.intro ? ' · ' + pltEsc(t.intro).slice(0,60) : ''}</div></div><div class="catalog-right"><span class="catalog-arrow">→</span></div></div>`).join('');
+  }catch(e){ host.innerHTML=''; }
+}
+let ctestActive=null, ctestAnswers=[], ctestQ=0, ctestEntry={};
+async function openCustomTest(id){
+  try{ const t=await pfApi('/tests/'+id); ctestActive=t; ctestAnswers=[]; ctestQ=0; ctestEntry={}; switchView('ctest'); renderCustomIntro(); }
+  catch(e){ alert(e.message); }
+}
+function renderCustomIntro(){
+  const c=document.getElementById('ctest-inner'); const t=ctestActive; if(!c||!t) return;
+  const author = t.owner_name || 'сотрудник ЮФУ';
+  const fields = t.entry_fields || [];
+  c.innerHTML = `<div class="results-head"><h2>${pltEsc(t.title)}<span class="plt-badge-teacher">от сотрудника ЮФУ</span></h2>${t.intro ? ('<p>'+pltEsc(t.intro)+'</p>') : ''}</div>
+    <div class="profile-card" style="max-width:560px">
+      <div class="plt-consent"><b>Важно: это не анонимно.</b> Тест создал сотрудник ЮФУ (${pltEsc(author)}). Твои ответы${fields.length ? ' и данные ниже' : ''} будут отправлены автору теста и видны ему.</div>
+      ${fields.map(f => `<label class="profile-field"><span>${pltEsc(f)}</span><input class="profile-input plt-entry" data-field="${pltEsc(f)}"></label>`).join('')}
+      <label class="profile-field" style="flex-direction:row;align-items:flex-start;gap:8px;margin-top:6px"><input type="checkbox" id="plt-consent-chk"> <span>Я согласен(на), что мои ответы${fields.length ? ' и указанные данные' : ''} увидит автор теста</span></label>
+      <div style="display:flex;gap:10px;margin-top:10px"><button class="btn-primary" onclick="startCustomQuiz()">Начать тест</button><button class="plt-mini" onclick="switchView('tests')">Отмена</button></div>
+      <div class="plt-msg" id="plt-consent-msg"></div>
+    </div>`;
+}
+function startCustomQuiz(){
+  const chk=document.getElementById('plt-consent-chk');
+  if(!chk || !chk.checked){ const m=document.getElementById('plt-consent-msg'); if(m){ m.style.color='#E05A5A'; m.textContent='Нужно согласие, чтобы пройти этот тест.'; } return; }
+  ctestEntry={}; document.querySelectorAll('#ctest-inner .plt-entry').forEach(inp=>{ ctestEntry[inp.dataset.field]=inp.value.trim(); });
+  ctestAnswers=[]; ctestQ=0; renderCustomTest();
+}
+function renderCustomTest(){
+  const c=document.getElementById('ctest-inner'); const t=ctestActive; if(!c||!t) return;
+  if(ctestQ >= t.questions.length){ return renderCustomResult(); }
+  const q=t.questions[ctestQ];
+  c.innerHTML = `<div class="results-head"><h2>${pltEsc(t.title)}<span class="plt-badge-teacher">от сотрудника ЮФУ</span></h2>${t.intro ? ('<p>'+pltEsc(t.intro)+'</p>') : ''}</div>
+    <div class="plt-progress">Вопрос ${ctestQ+1} из ${t.questions.length}</div>
+    <div class="profile-card" style="max-width:640px">
+      ${t.instruction ? ('<div class="plt-note" style="margin-top:0;margin-bottom:12px;opacity:.9">'+pltEsc(t.instruction)+'</div>') : ''}
+      <div style="font-weight:600;margin-bottom:12px">${pltEsc(q.t)}</div>
+      ${(t.options||[]).map(o => `<button class="plt-opt" onclick="answerCustom(${Number(o.v)||0})">${pltEsc(o.label)}</button>`).join('')}
+    </div>`;
+}
+function answerCustom(v){ ctestAnswers.push(v); ctestQ++; renderCustomTest(); }
+function renderCustomResult(){
+  const c=document.getElementById('ctest-inner'); const t=ctestActive; if(!c||!t) return;
+  const total=ctestAnswers.reduce((a,b)=>a+b,0);
+  const bands=(t.bands||[]).slice().sort((a,b)=>(a.max||0)-(b.max||0));
+  const band=bands.find(b=>total<=(b.max||0)) || bands[bands.length-1] || {title:'Результат', analysis:''};
+  c.innerHTML = `<div class="results-head"><h2>${pltEsc(t.title)} — результат</h2></div>
+    <div class="profile-card" style="max-width:640px">
+      <div class="plt-score">Баллы: ${total}</div>
+      <div style="font-size:1.1rem;font-weight:700;margin-bottom:8px">${pltEsc(band.title)}</div>
+      <p>${pltEsc(band.analysis)}</p>
+      <p class="plt-note" id="plt-sent">Отправляем результат автору теста…</p>
+      <div style="display:flex;gap:10px;margin-top:12px"><button class="btn-primary" onclick="switchView('tests')">К тестам</button><button class="plt-mini" onclick="openCustomTest('${t.id}')">Пройти заново</button></div>
+    </div>`;
+  submitCustom(t, total, band);
+}
+async function submitCustom(t, total, band){
+  const el=document.getElementById('plt-sent');
+  try{
+    await pfApi('/submit', {method:'POST', body:JSON.stringify({test_id:t.id, entry:ctestEntry||{}, answers:ctestAnswers, result:{total:total, title:band.title}})});
+    if(el) el.textContent='Результат отправлен автору теста.';
+  }catch(e){ if(el) el.textContent='Не удалось отправить результат автору (ошибка сети). Результат виден тебе.'; }
+}
+
+// Инициализация платформы при загрузке
+pfRefreshMe();
+
+// ── Профиль студента ЮФУ ──
+const UFU_UNITS = [
+  'Институт компьютерных технологий и информационной безопасности (ИКТИБ)',
+  'Институт управления в экономических, экологических и социальных системах (ИУИЭС)',
+  'Институт нанотехнологий, электроники и приборостроения (ИНЭП)',
+  'Институт радиотехнических систем и управления (ИРТСУ)'
+];
+
+function getProfile() { try { return JSON.parse(localStorage.getItem('mental_profile') || '{}'); } catch(e) { return {}; } }
+function saveProfile(p) { try { localStorage.setItem('mental_profile', JSON.stringify(p)); } catch(e) {} }
+
+function profileSummary(p) {
+  if (!p || !p.unit) return '';
+  const parts = [];
+  if (p.name) parts.push(p.name);
+  if (p.course) parts.push(p.course + ' курс');
+  parts.push(p.unit.replace(/\s*\(.*\)$/, ''));
+  return parts.join(', ');
+}
+
+function renderProfile() {
+  const c = document.getElementById('profile-inner');
+  const p = getProfile();
+  const unitOpts = UFU_UNITS.map(u => `<option value="${u}" ${p.unit === u ? 'selected' : ''}>${u}</option>`).join('');
+  const courseOpts = ['1','2','3','4','5','6'].map(n => `<option value="${n}" ${p.course === n ? 'selected' : ''}>${n} курс</option>`).join('');
+  const levelOpts = ['Бакалавриат','Специалитет','Магистратура','Аспирантура'].map(l => `<option value="${l}" ${p.level === l ? 'selected' : ''}>${l}</option>`).join('');
+  c.innerHTML = `
+    <div class="results-head"><h2>Мой профиль</h2><p>Расскажи, кто ты в ЮФУ — так Ментал понимает твой контекст (курс, направление). Данные хранятся только в твоём браузере.</p></div>
+    <div class="profile-card">
+      <label class="profile-field"><span>Как тебя зовут</span>
+        <input id="pf-name" class="profile-input" type="text" placeholder="Имя" value="${p.name ? p.name.replace(/"/g,'&quot;') : ''}"></label>
+      <label class="profile-field"><span>Уровень обучения</span>
+        <select id="pf-level" class="profile-input"><option value="">— выбери —</option>${levelOpts}</select></label>
+      <label class="profile-field"><span>Институт / факультет</span>
+        <select id="pf-unit" class="profile-input"><option value="">— выбери —</option>${unitOpts}</select></label>
+      <label class="profile-field"><span>Курс</span>
+        <select id="pf-course" class="profile-input"><option value="">— выбери —</option>${courseOpts}</select></label>
+      <button class="mood-save-btn" onclick="saveProfileForm()">Сохранить профиль</button>
+    </div>`;
+}
+
+function saveProfileForm() {
+  const p = {
+    name: document.getElementById('pf-name').value.trim(),
+    level: document.getElementById('pf-level').value,
+    unit: document.getElementById('pf-unit').value,
+    course: document.getElementById('pf-course').value
+  };
+  saveProfile(p);
+  if (p.name) { try { localStorage.setItem('mental_name', p.name); } catch(e) {} }
+  updateProfileBadge();
+  const btn = document.querySelector('#view-profile .mood-save-btn');
+  if (btn) { btn.textContent = '✅ Сохранено!'; btn.style.background = 'var(--sage)'; setTimeout(() => { btn.textContent = 'Сохранить профиль'; btn.style.background = ''; }, 1800); }
+}
+
+function updateProfileBadge() {
+  const el = document.getElementById('profile-badge');
+  if (!el) return;
+  const s = profileSummary(getProfile());
+  if (s) { el.textContent = '🎓 ' + s; el.hidden = false; } else { el.hidden = true; }
+}
+
+// ── Дневник мыслей (КПТ) ──
+function getJournal() { try { return JSON.parse(localStorage.getItem('mental_journal') || '[]'); } catch(e) { return []; } }
+function saveJournalEntries(a) { try { localStorage.setItem('mental_journal', JSON.stringify(a)); } catch(e) {} }
+
+function renderJournal() {
+  const c = document.getElementById('journal-inner');
+  const entries = getJournal();
+  let past = '';
+  if (entries.length) {
+    past = `<div class="tech-cat">Прошлые записи (${entries.length})</div>` +
+      entries.slice().reverse().map((e, i) => {
+        const realIdx = entries.length - 1 - i;
+        return `<div class="journal-entry">
+          <div class="journal-entry-date">${e.date}</div>
+          <div class="journal-entry-row"><b>Ситуация:</b> ${escHtml(e.situation || '—')}</div>
+          ${e.emotion ? `<div class="journal-entry-row"><b>Эмоции:</b> ${escHtml(e.emotion)}${e.intensity ? ' · ' + escHtml(e.intensity) + '%' : ''}</div>` : ''}
+          <div class="journal-entry-row"><b>Мысль:</b> ${escHtml(e.thought || '—')}</div>
+          <div class="journal-entry-row"><b>Взгляд иначе:</b> ${escHtml(e.reframe || '—')}</div>
+          <button class="journal-del" onclick="deleteJournal(${realIdx})">Удалить</button>
+        </div>`;
+      }).join('');
+  }
+  c.innerHTML = `
+    <div class="results-head"><h2>Дневник мыслей</h2><p>Приём из когнитивно-поведенческой терапии (КПТ) по модели ABC: разбираем ситуацию (A) и мысль о ней (B) по шагам — чтобы увидеть её более взвешенно и изменить реакцию (C). Про саму модель ABC есть карточка в разделе «Техники». Записи хранятся только у тебя.</p></div>
+    <div class="profile-card">
+      <label class="profile-field"><span>1. Ситуация — что случилось?</span>
+        <textarea id="jf-situation" class="profile-input journal-ta" rows="2" placeholder="Напр.: научрук раскритиковал мою курсовую"></textarea></label>
+      <label class="profile-field"><span>2. Эмоции — что почувствовал(а)?</span>
+        <input id="jf-emotion" class="profile-input" type="text" placeholder="Напр.: стыд, тревога, злость"></label>
+      <label class="profile-field"><span>Насколько сильно? (0–100%)</span>
+        <input id="jf-intensity" class="profile-input" type="number" min="0" max="100" placeholder="70"></label>
+      <label class="profile-field"><span>3. Автоматическая мысль — что пронеслось в голове?</span>
+        <textarea id="jf-thought" class="profile-input journal-ta" rows="2" placeholder="Напр.: я бездарь, у меня ничего не выйдет"></textarea></label>
+      <label class="profile-field"><span>4. Взгляд иначе — как бы это увидел спокойный друг?</span>
+        <textarea id="jf-reframe" class="profile-input journal-ta" rows="2" placeholder="Напр.: одна правка не значит провал — доработаю по замечаниям"></textarea></label>
+      <button class="mood-save-btn" onclick="saveJournalForm()">Сохранить запись</button>
+    </div>
+    ${past}`;
+}
+
+function saveJournalForm() {
+  const situation = document.getElementById('jf-situation').value.trim();
+  const thought = document.getElementById('jf-thought').value.trim();
+  if (!situation && !thought) { alert('Опиши хотя бы ситуацию и мысль'); return; }
+  const entries = getJournal();
+  entries.push({
+    situation, thought,
+    emotion: document.getElementById('jf-emotion').value.trim(),
+    intensity: document.getElementById('jf-intensity').value.trim(),
+    reframe: document.getElementById('jf-reframe').value.trim(),
+    date: new Date().toLocaleDateString('ru') + ', ' + new Date().toLocaleTimeString('ru', {hour:'2-digit', minute:'2-digit'}),
+    ts: Date.now()
+  });
+  if (entries.length > 100) entries.splice(0, entries.length - 100);
+  saveJournalEntries(entries);
+  renderJournal();
+}
+
+function deleteJournal(idx) {
+  const entries = getJournal();
+  entries.splice(idx, 1);
+  saveJournalEntries(entries);
+  renderJournal();
+}
+
+// ── Куда обратиться ──
+function renderHelp() {
+  document.getElementById('help-inner').innerHTML = `
+    <div class="results-head"><h2>Куда обратиться</h2><p>Если тяжело — ты не один. Вот кто может помочь, бесплатно и конфиденциально.</p></div>
+    <div class="help-card help-urgent">
+      <h3>🚨 Если прямо сейчас очень плохо</h3>
+      <p>Если появляются мысли причинить себе вред — пожалуйста, позвони прямо сейчас. Тебе помогут, это бесплатно и анонимно.</p>
+      <div class="help-phone">8-800-2000-122</div>
+      <div class="help-phone-sub">Телефон доверия — бесплатно, круглосуточно, анонимно</div>
+      <div class="help-phone">112</div>
+      <div class="help-phone-sub">Единый номер экстренных служб</div>
+    </div>
+    <div class="help-card">
+      <h3>🏫 Психологическая служба ЮФУ</h3>
+      <p>Бесплатная психологическая помощь для студентов ЮФУ — очно и онлайн, конфиденциально. Прийти можно с чем угодно: стресс, тревога, отношения, учёба, выгорание.</p>
+      <p class="help-note">Запись и контакты — через деканат твоего института, профком или официальный сайт ЮФУ (раздел «Психологическая служба»).</p>
+    </div>
+    <div class="help-card">
+      <h3>🤝 Как помочь другу, которому плохо</h3>
+      <ul>
+        <li><b>Выслушай без оценок.</b> Не обесценивай («да ладно, ерунда») и не сыпь советами сразу.</li>
+        <li><b>Будь рядом.</b> Иногда «я с тобой, расскажи» важнее любых решений.</li>
+        <li><b>Мягко предложи помощь специалиста</b> — психслужбу ЮФУ или телефон доверия. Это не «сдать», а поддержать.</li>
+        <li><b>Если речь о причинении себе вреда</b> — не оставляй человека одного и помоги связаться с 8-800-2000-122 или 112.</li>
+      </ul>
+    </div>
+    <p class="test-disclaimer">Ментал — это поддержка и самопомощь, а не замена живому специалисту. При серьёзных или длительных трудностях обратись к психологу.</p>`;
 }
 
 // ═══════════════════════════════════════════

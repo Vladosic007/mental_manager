@@ -15,11 +15,12 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Header, HTTPException
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 import mental_core  # noqa: E402  — общий «мозг» бота
+import platform_store  # noqa: E402  — аккаунты, роли, пользовательские тесты (Этап 3)
 
 STATIC_DIR = Path(__file__).resolve().parent / "static"
 
@@ -38,6 +39,9 @@ class ChatIn(BaseModel):
     message: str
     session_id: str = "web-default"
     user_name: str = ""
+    name: str = ""
+    faculty: str = ""
+    course: str = ""
 
 
 class ChatOut(BaseModel):
@@ -66,7 +70,8 @@ async def selftest():
 
 @app.post("/api/chat", response_model=ChatOut)
 async def chat(inp: ChatIn):
-    reply = await mental_core.process_message(inp.session_id, inp.message)
+    student = {"name": inp.name or inp.user_name, "faculty": inp.faculty, "course": inp.course}
+    reply = await mental_core.process_message(inp.session_id, inp.message, student=student)
     return ChatOut(reply=reply)
 
 
@@ -76,6 +81,129 @@ def reset(inp: ChatIn):
     mental_core.user_profiles.pop(str(inp.session_id), None)
     mental_core.storage.save_profiles(mental_core.user_profiles)
     return {"status": "reset"}
+
+
+# ====== Платформа: аккаунты, роли, пользовательские тесты (Этап 3) ======
+class SignupIn(BaseModel):
+    username: str
+    password: str
+    role: str
+    name: str = ""
+    admin_code: str = ""
+
+
+class LoginIn(BaseModel):
+    username: str
+    password: str
+
+
+class TestIn(BaseModel):
+    title: str = ""
+    intro: str = ""
+    instruction: str = ""
+    options: list = []
+    questions: list = []
+    bands: list = []
+    entry_fields: list = []
+    published: bool = True
+
+
+class SubmitIn(BaseModel):
+    test_id: str
+    entry: dict = {}
+    answers: list = []
+    result: dict = {}
+
+
+def _as_dict(model):
+    return model.model_dump() if hasattr(model, "model_dump") else model.dict()
+
+
+def _token(authorization):
+    if not authorization:
+        return ""
+    return authorization.split()[-1].strip()
+
+
+def _require(authorization):
+    me = platform_store.whoami(_token(authorization))
+    if not me:
+        raise HTTPException(status_code=401, detail="Требуется вход")
+    return me
+
+
+@app.post("/api/platform/signup")
+def platform_signup(inp: SignupIn):
+    me, err = platform_store.create_account(inp.username, inp.password, inp.role, inp.name, inp.admin_code)
+    if err:
+        raise HTTPException(status_code=400, detail=err)
+    return me
+
+
+@app.post("/api/platform/login")
+def platform_login(inp: LoginIn):
+    me, err = platform_store.login(inp.username, inp.password)
+    if err:
+        raise HTTPException(status_code=401, detail=err)
+    return me
+
+
+@app.get("/api/platform/me")
+def platform_me(authorization: str = Header(None)):
+    return platform_store.whoami(_token(authorization)) or {}
+
+
+@app.post("/api/platform/logout")
+def platform_logout(authorization: str = Header(None)):
+    platform_store.logout(_token(authorization))
+    return {"status": "ok"}
+
+
+@app.post("/api/platform/tests")
+def platform_create_test(inp: TestIn, authorization: str = Header(None)):
+    me = _require(authorization)
+    return platform_store.create_test(me["username"], _as_dict(inp))
+
+
+@app.get("/api/platform/tests/mine")
+def platform_my_tests(authorization: str = Header(None)):
+    me = _require(authorization)
+    return platform_store.list_tests(owner=me["username"])
+
+
+@app.get("/api/platform/tests/published")
+def platform_published_tests():
+    return platform_store.list_tests(published=True)
+
+
+@app.get("/api/platform/tests/{tid}")
+def platform_get_test(tid: str):
+    t = platform_store.get_test(tid)
+    if not t:
+        raise HTTPException(status_code=404, detail="Тест не найден")
+    return t
+
+
+@app.delete("/api/platform/tests/{tid}")
+def platform_delete_test(tid: str, authorization: str = Header(None)):
+    me = _require(authorization)
+    if not platform_store.delete_test(me["username"], tid):
+        raise HTTPException(status_code=404, detail="Тест не найден или принадлежит не вам")
+    return {"status": "deleted"}
+
+
+@app.post("/api/platform/submit")
+def platform_submit(inp: SubmitIn):
+    if not platform_store.get_test(inp.test_id):
+        raise HTTPException(status_code=404, detail="Тест не найден")
+    rec = platform_store.add_submission(_as_dict(inp))
+    return {"status": "ok", "id": rec["id"]}
+
+
+@app.get("/api/platform/submissions")
+def platform_submissions(authorization: str = Header(None)):
+    me = _require(authorization)
+    return platform_store.list_submissions(me["username"])
 
 
 # Отдаём сайт. Монтируем ПОСЛЕ api-роутов, чтобы /api/* не перехватывался.

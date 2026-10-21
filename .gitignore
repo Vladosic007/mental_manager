@@ -21,6 +21,11 @@ user_profiles.json
 user_states.json
 mood_tracking.json
 
+# === Платформа: аккаунты (хэши паролей) и ответы студентов — НИКОГДА не коммитить ===
+platform_accounts.json
+platform_submissions.json
+platform_tests.json
+
 # === Логи ===
 training_log_*.txt
 *.log
